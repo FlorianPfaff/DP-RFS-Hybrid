@@ -1,6 +1,6 @@
-"""Dirichlet-process clutter density model for RFS-style trackers.
+"""Clutter density models for RFS-style trackers.
 
-The model deliberately estimates a *normalized clutter density* in measurement
+The models deliberately estimate *normalized clutter densities* in measurement
 space. The Poisson clutter rate is represented separately by ``rate`` so that the
 RFS intensity can be evaluated as ``kappa(z) = rate * c(z)``.
 """
@@ -44,13 +44,85 @@ class ClutterAtom:
 
 @dataclass(frozen=True)
 class ClutterUpdate:
-    """Diagnostic result of a weighted DP clutter update."""
+    """Diagnostic result of a clutter-density update."""
 
     responsibility: float
     branch: str
     atom_index: int | None
     density_before_update: float
     intensity_before_update: float
+
+
+@dataclass
+class FixedGaussianMixtureClutterModel:
+    """Hand-specified Gaussian-mixture clutter density baseline.
+
+    This class implements the same ``density(z)`` and ``intensity(z)`` interface
+    as :class:`DirichletProcessClutterModel`, but it does not learn. It is useful
+    as a stronger baseline than scalar/uniform clutter and as an oracle-ish
+    comparison when hotspot locations are known in advance.
+    """
+
+    weights: np.ndarray
+    means: np.ndarray
+    covariances: np.ndarray
+    rate: float
+
+    def __post_init__(self) -> None:
+        if self.rate <= 0.0:
+            raise ValueError("rate must be positive")
+        self.weights = _normalize_weights(self.weights)
+        self.means = np.asarray(self.means, dtype=float)
+        self.covariances = np.asarray(self.covariances, dtype=float)
+        if self.means.ndim != 2:
+            raise ValueError("means must have shape (num_components, dim)")
+        if self.covariances.ndim != 3:
+            raise ValueError("covariances must have shape (num_components, dim, dim)")
+        if self.means.shape[0] != self.weights.size:
+            raise ValueError("weights and means must have the same number of components")
+        if self.covariances.shape[0] != self.weights.size:
+            raise ValueError("weights and covariances must have the same number of components")
+        dim = self.means.shape[1]
+        if self.covariances.shape[1:] != (dim, dim):
+            raise ValueError("covariance dimensions must match mean dimension")
+
+    def density(self, measurement: np.ndarray | list[float] | tuple[float, ...]) -> float:
+        measurement_vec = _as_vector(measurement)
+        if measurement_vec.size != self.means.shape[1]:
+            raise ValueError("measurement dimension does not match clutter model")
+        density = 0.0
+        for weight, mean, covariance in zip(self.weights, self.means, self.covariances):
+            density += float(weight) * gaussian_pdf(measurement_vec, mean, covariance)
+        return float(density)
+
+    def intensity(self, measurement: np.ndarray | list[float] | tuple[float, ...]) -> float:
+        return float(self.rate * self.density(measurement))
+
+    def update(
+        self,
+        measurement: np.ndarray | list[float] | tuple[float, ...],
+        responsibility: float = 1.0,
+    ) -> ClutterUpdate:
+        """Return diagnostics without modifying the fixed baseline."""
+
+        measurement_vec = _as_vector(measurement)
+        responsibility = float(responsibility)
+        if not 0.0 <= responsibility <= 1.0:
+            raise ValueError("responsibility must be in [0, 1]")
+        density_before = self.density(measurement_vec)
+        return ClutterUpdate(
+            responsibility=responsibility,
+            branch="fixed",
+            atom_index=None,
+            density_before_update=density_before,
+            intensity_before_update=float(self.rate * density_before),
+        )
+
+    def decay_counts(self, retention: float = 1.0) -> None:
+        """No-op for interface compatibility with adaptive clutter models."""
+
+        if not 0.0 < retention <= 1.0:
+            raise ValueError("retention must be in (0, 1]")
 
 
 @dataclass
@@ -115,17 +187,7 @@ class DirichletProcessClutterModel:
         measurement: np.ndarray | list[float] | tuple[float, ...],
         responsibility: float = 1.0,
     ) -> ClutterUpdate:
-        """Update the DP clutter model with a fractional clutter observation.
-
-        Parameters
-        ----------
-        measurement:
-            Measurement-space vector.
-        responsibility:
-            Posterior probability or soft weight that the measurement is clutter.
-            Values near zero leave the model unchanged but still return predictive
-            diagnostics.
-        """
+        """Update the DP clutter model with a fractional clutter observation."""
 
         measurement_vec = _as_vector(measurement)
         responsibility = float(responsibility)
@@ -209,3 +271,15 @@ def _as_square_matrix(value: np.ndarray | list[list[float]], dim: int) -> np.nda
     if matrix.shape != (dim, dim):
         raise ValueError(f"Expected a square matrix with shape ({dim}, {dim})")
     return matrix
+
+
+def _normalize_weights(value: np.ndarray | list[float] | tuple[float, ...]) -> np.ndarray:
+    weights = _as_vector(value)
+    if weights.size == 0:
+        raise ValueError("weights must not be empty")
+    if np.any(weights < 0.0):
+        raise ValueError("weights must be nonnegative")
+    total = float(np.sum(weights))
+    if total <= 0.0:
+        raise ValueError("at least one weight must be positive")
+    return weights / total
