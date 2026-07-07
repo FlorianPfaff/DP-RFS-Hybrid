@@ -1,9 +1,14 @@
 import numpy as np
 
-from dp_rfs_hybrid import DirichletProcessBirthModel, GaussianState, LabeledMultiBernoulliTracker
+from dp_rfs_hybrid import (
+    DirichletProcessBirthModel,
+    DirichletProcessClutterModel,
+    GaussianState,
+    LabeledMultiBernoulliTracker,
+)
 
 
-def make_tracker() -> LabeledMultiBernoulliTracker:
+def make_tracker(clutter_model: DirichletProcessClutterModel | None = None) -> LabeledMultiBernoulliTracker:
     transition = np.eye(4)
     process_noise = np.diag([0.05, 0.05, 0.01, 0.01])
     measurement = np.array(
@@ -28,6 +33,7 @@ def make_tracker() -> LabeledMultiBernoulliTracker:
         measurement_matrix=measurement,
         measurement_noise=measurement_noise,
         birth_model=birth_model,
+        clutter_model=clutter_model,
         association_threshold=5.0,
         prune_below_existence=0.01,
     )
@@ -52,3 +58,23 @@ def test_nearby_followup_measurement_updates_existing_track() -> None:
     assert summary.assignments == [(1, 0)]
     assert summary.births == []
     assert len(tracker.tracks) == 1
+
+
+def test_dp_clutter_model_can_suppress_birth_and_learn_hotspot() -> None:
+    clutter_model = DirichletProcessClutterModel(
+        alpha=1.0,
+        base_mean=np.array([8.0, 2.0]),
+        base_covariance=np.diag([0.25, 0.25]),
+        rate=10.0,
+        prune_below_count=0.01,
+    )
+    tracker = make_tracker(clutter_model=clutter_model)
+
+    summary = tracker.step(np.array([[8.0, 2.0]]))
+
+    assert summary.births == []
+    assert summary.clutter == [0]
+    assert len(tracker.tracks) == 0
+    assert len(clutter_model.atoms) == 1
+    assert summary.clutter_updates[0][0] == 0
+    assert summary.clutter_updates[0][1] > 0.99
