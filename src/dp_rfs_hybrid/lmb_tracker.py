@@ -52,6 +52,8 @@ class LabeledMultiBernoulliTracker:
     association_threshold: float = 5.0
     prune_below_existence: float = 0.05
     max_tracks: int = 64
+    clutter_responsibility_learning_rate: float = 1.0
+    min_clutter_responsibility_to_learn: float = 0.0
     tracks: list[Track] = field(default_factory=list)
     next_label: int = 1
 
@@ -64,6 +66,10 @@ class LabeledMultiBernoulliTracker:
             raise ValueError("survival_probability must be in (0, 1]")
         if not 0.0 < self.detection_probability <= 1.0:
             raise ValueError("detection_probability must be in (0, 1]")
+        if not 0.0 <= self.clutter_responsibility_learning_rate <= 1.0:
+            raise ValueError("clutter_responsibility_learning_rate must be in [0, 1]")
+        if not 0.0 <= self.min_clutter_responsibility_to_learn <= 1.0:
+            raise ValueError("min_clutter_responsibility_to_learn must be in [0, 1]")
 
     def predict(self) -> None:
         for track in self.tracks:
@@ -220,6 +226,11 @@ class LabeledMultiBernoulliTracker:
         birth_odds = max(float(birth_odds), 0.0)
         return float(1.0 / (1.0 + birth_odds))
 
+    def _learned_clutter_responsibility(self, responsibility: float) -> float:
+        if responsibility < self.min_clutter_responsibility_to_learn:
+            return 0.0
+        return float(self.clutter_responsibility_learning_rate * responsibility)
+
     def _update_clutter_model(
         self,
         clutter_evidence: list[tuple[int, np.ndarray, float]],
@@ -228,6 +239,7 @@ class LabeledMultiBernoulliTracker:
             return []
         updates: list[tuple[int, float]] = []
         for measurement_index, measurement, responsibility in clutter_evidence:
-            self.clutter_model.update(measurement, responsibility=responsibility)
-            updates.append((measurement_index, responsibility))
+            learned_responsibility = self._learned_clutter_responsibility(responsibility)
+            self.clutter_model.update(measurement, responsibility=learned_responsibility)
+            updates.append((measurement_index, learned_responsibility))
         return updates
