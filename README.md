@@ -59,6 +59,19 @@ python examples/run_structured_clutter_demo.py
 
 The birth demo simulates two recurring birth regions, clutter, and a compact tracker that learns birth atoms online. The clutter demo compares fixed scalar clutter against an adaptive DP clutter model around a persistent measurement-space hotspot.
 
+## Reusable Experiment API
+
+The structured-clutter demo is backed by a reusable experiment helper:
+
+```python
+from dp_rfs_hybrid import run_structured_clutter_experiment
+
+result = run_structured_clutter_experiment(scans=20, seed=11)
+rows = result.as_rows()
+```
+
+The result reports cumulative births, final active tracks, active clutter atoms, and per-scan records that can be exported to paper tables or figures.
+
 ## Package Layout
 
 ```text
@@ -67,6 +80,7 @@ src/dp_rfs_hybrid/
   dp_birth.py      # truncated DP birth atom model
   dp_clutter.py    # truncated DP clutter density model
   lmb_tracker.py   # small RFS-style multi-Bernoulli tracker
+  experiments.py   # reusable structured-clutter experiment harness
 examples/
   run_synthetic_birth_demo.py
   run_structured_clutter_demo.py
