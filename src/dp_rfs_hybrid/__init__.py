@@ -2,6 +2,13 @@
 
 from .dp_birth import BirthAtom, BirthDecision, DirichletProcessBirthModel
 from .dp_clutter import ClutterAtom, ClutterUpdate, DirichletProcessClutterModel
+from .experiments import (
+    StructuredClutterExperimentResult,
+    StructuredClutterScanRecord,
+    make_structured_clutter_tracker,
+    run_structured_clutter_experiment,
+    simulate_structured_clutter_measurements,
+)
 from .gaussian import GaussianState, gaussian_pdf
 from .lmb_tracker import LabeledMultiBernoulliTracker, StepSummary, Track
 
@@ -15,6 +22,11 @@ __all__ = [
     "GaussianState",
     "LabeledMultiBernoulliTracker",
     "StepSummary",
+    "StructuredClutterExperimentResult",
+    "StructuredClutterScanRecord",
     "Track",
     "gaussian_pdf",
+    "make_structured_clutter_tracker",
+    "run_structured_clutter_experiment",
+    "simulate_structured_clutter_measurements",
 ]
