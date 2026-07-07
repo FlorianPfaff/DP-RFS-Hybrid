@@ -7,8 +7,10 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from .dp_birth import DirichletProcessBirthModel
-from .dp_clutter import DirichletProcessClutterModel
+from .dp_clutter import DirichletProcessClutterModel, FixedGaussianMixtureClutterModel
 from .gaussian import GaussianState
+
+ClutterModel = DirichletProcessClutterModel | FixedGaussianMixtureClutterModel
 
 
 @dataclass
@@ -34,11 +36,11 @@ class LabeledMultiBernoulliTracker:
     """Small RFS-style tracker for experimenting with DP nuisance models.
 
     The tracker keeps labels and Bernoulli existence probabilities in the RFS
-    layer. The DP birth model handles reusable birth regions. If an optional DP
-    clutter model is supplied, its posterior-predictive intensity replaces the
-    scalar clutter intensity in association odds, existence updates, and birth
-    decisions. RFS-style clutter responsibilities are then fed back into the
-    clutter model as fractional observations.
+    layer. The DP birth model handles reusable birth regions. If an optional
+    clutter model is supplied, its intensity replaces the scalar clutter
+    intensity in association odds, existence updates, and birth decisions.
+    RFS-style clutter responsibilities are then fed back into adaptive clutter
+    models as fractional observations.
     """
 
     transition_matrix: np.ndarray
@@ -46,7 +48,7 @@ class LabeledMultiBernoulliTracker:
     measurement_matrix: np.ndarray
     measurement_noise: np.ndarray
     birth_model: DirichletProcessBirthModel
-    clutter_model: DirichletProcessClutterModel | None = None
+    clutter_model: ClutterModel | None = None
     survival_probability: float = 0.98
     detection_probability: float = 0.9
     association_threshold: float = 5.0
