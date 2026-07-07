@@ -43,13 +43,21 @@ python -m pip install -e ".[test]"
 pytest
 ```
 
-## Quick Demo
+## Quick Demos
+
+DP birth learning:
 
 ```bash
 python examples/run_synthetic_birth_demo.py
 ```
 
-The demo simulates two recurring birth regions, clutter, and a compact tracker that learns birth atoms online.
+Structured DP clutter learning:
+
+```bash
+python examples/run_structured_clutter_demo.py
+```
+
+The birth demo simulates two recurring birth regions, clutter, and a compact tracker that learns birth atoms online. The clutter demo compares fixed scalar clutter against an adaptive DP clutter model around a persistent measurement-space hotspot.
 
 ## Package Layout
 
@@ -61,6 +69,7 @@ src/dp_rfs_hybrid/
   lmb_tracker.py   # small RFS-style multi-Bernoulli tracker
 examples/
   run_synthetic_birth_demo.py
+  run_structured_clutter_demo.py
 tests/
 ```
 
