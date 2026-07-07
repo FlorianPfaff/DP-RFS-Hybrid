@@ -28,6 +28,8 @@ kappa(z) = lambda_C * c(z)
 
 where `DirichletProcessClutterModel` estimates `c(z)` and stores `lambda_C` as `rate`.
 
+The tracker can optionally consume `DirichletProcessClutterModel`: association odds, Bernoulli existence updates, and birth decisions use `clutter_model.intensity(z)` instead of a fixed scalar clutter intensity. The tracker then feeds fractional clutter responsibilities back into the DP clutter model.
+
 ## Install
 
 ```bash
@@ -68,6 +70,6 @@ tests/
 - Finite active DP atoms, not full posterior sampling of the random measure.
 - Gaussian birth/clutter atoms and linear-Gaussian tracking only.
 - Heuristic birth-vs-clutter odds threshold.
-- DP clutter is currently a standalone density model; the tracker does not yet feed posterior clutter responsibilities into it automatically.
+- DP clutter feedback is still approximate and single-scan; it does not yet use delayed confirmation, smoothing, or a full multi-hypothesis responsibility calculation.
 
 Those restrictions are intentional for the first artifact: the goal is to isolate whether adaptive nonparametric nuisance structure helps before adding a larger RFS backend.
