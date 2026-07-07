@@ -1,7 +1,12 @@
 """DP/RFS hybrid tracking primitives."""
 
 from .dp_birth import BirthAtom, BirthDecision, DirichletProcessBirthModel
-from .dp_clutter import ClutterAtom, ClutterUpdate, DirichletProcessClutterModel
+from .dp_clutter import (
+    ClutterAtom,
+    ClutterUpdate,
+    DirichletProcessClutterModel,
+    FixedGaussianMixtureClutterModel,
+)
 from .experiments import (
     StructuredClutterExperimentResult,
     StructuredClutterScanRecord,
@@ -19,6 +24,7 @@ __all__ = [
     "ClutterUpdate",
     "DirichletProcessBirthModel",
     "DirichletProcessClutterModel",
+    "FixedGaussianMixtureClutterModel",
     "GaussianState",
     "LabeledMultiBernoulliTracker",
     "StepSummary",
