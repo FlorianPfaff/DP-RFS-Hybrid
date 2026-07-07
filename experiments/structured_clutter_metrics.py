@@ -10,6 +10,7 @@ import numpy as np
 from dp_rfs_hybrid import (
     DirichletProcessBirthModel,
     DirichletProcessClutterModel,
+    FixedGaussianMixtureClutterModel,
     GaussianState,
     LabeledMultiBernoulliTracker,
 )
@@ -17,6 +18,11 @@ from dp_rfs_hybrid import (
 
 HOTSPOT = np.array([10.0, 5.0])
 TRUE_BIRTH = np.array([-16.0, -5.0])
+TRACKER_KINDS = (
+    "fixed_scalar_clutter",
+    "fixed_gmm_clutter",
+    "adaptive_dp_clutter",
+)
 
 
 @dataclass(frozen=True)
@@ -73,6 +79,13 @@ def make_tracker(kind: str) -> LabeledMultiBernoulliTracker:
             prune_below_count=0.02,
             max_atoms=8,
         )
+    elif kind == "fixed_gmm_clutter":
+        clutter_model = FixedGaussianMixtureClutterModel(
+            weights=np.array([1.0]),
+            means=np.array([HOTSPOT.copy()]),
+            covariances=np.array([np.diag([1.5, 1.5])]),
+            rate=8.0,
+        )
     elif kind != "fixed_scalar_clutter":
         raise ValueError(f"Unknown tracker kind: {kind}")
 
@@ -113,6 +126,13 @@ def count_hotspot_estimates(tracker: LabeledMultiBernoulliTracker, radius: float
     return count
 
 
+def count_clutter_atoms(tracker: LabeledMultiBernoulliTracker) -> int:
+    clutter_model = tracker.clutter_model
+    if clutter_model is None or not hasattr(clutter_model, "atoms"):
+        return 0
+    return len(clutter_model.atoms)
+
+
 def run_one(seed: int, tracker_kind: str, scans: int) -> TrackerMetrics:
     rng = np.random.default_rng(seed)
     tracker = make_tracker(tracker_kind)
@@ -132,14 +152,14 @@ def run_one(seed: int, tracker_kind: str, scans: int) -> TrackerMetrics:
         final_active_tracks=len(tracker.tracks),
         hotspot_track_steps=hotspot_track_steps,
         final_birth_atoms=len(tracker.birth_model.atoms),
-        final_clutter_atoms=0 if tracker.clutter_model is None else len(tracker.clutter_model.atoms),
+        final_clutter_atoms=count_clutter_atoms(tracker),
     )
 
 
 def run_many(seeds: range, scans: int) -> list[TrackerMetrics]:
     rows: list[TrackerMetrics] = []
     for seed in seeds:
-        for tracker_kind in ("fixed_scalar_clutter", "adaptive_dp_clutter"):
+        for tracker_kind in TRACKER_KINDS:
             rows.append(run_one(seed, tracker_kind, scans))
     return rows
 
