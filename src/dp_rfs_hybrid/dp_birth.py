@@ -27,6 +27,7 @@ class BirthDecision:
     odds: float
     atom_index: int | None = None
     state: GaussianState | None = None
+    clutter_intensity: float | None = None
 
 
 @dataclass
@@ -37,6 +38,11 @@ class DirichletProcessBirthModel:
     receives mass proportional to ``alpha`` under the base Gaussian state. The
     best DP-birth explanation is accepted only when its odds against clutter
     exceed ``odds_threshold``.
+
+    The model keeps a default scalar ``clutter_intensity`` for simple experiments,
+    but :meth:`decide` and :meth:`process` can receive a measurement-specific
+    override. This is the insertion point for adaptive clutter models such as a
+    posterior-predictive DP clutter density.
     """
 
     alpha: float
@@ -83,10 +89,15 @@ class DirichletProcessBirthModel:
             self.measurement_noise,
         )
 
-    def decide(self, measurement: np.ndarray | list[float] | tuple[float, ...]) -> BirthDecision:
+    def decide(
+        self,
+        measurement: np.ndarray | list[float] | tuple[float, ...],
+        clutter_intensity: float | None = None,
+    ) -> BirthDecision:
         """Score a measurement without modifying model state."""
 
         measurement_vec = np.asarray(measurement, dtype=float)
+        resolved_clutter_intensity = self._resolve_clutter_intensity(clutter_intensity)
         existing_scores = self.score_existing_atoms(measurement_vec)
         new_score = self.score_new_atom(measurement_vec)
 
@@ -101,19 +112,25 @@ class DirichletProcessBirthModel:
                 atom_index = best_existing_index
                 best_score = best_existing_score
 
-        odds = self.birth_probability * best_score / self.clutter_intensity
+        odds = self.birth_probability * best_score / resolved_clutter_intensity
+        accepted = bool(odds > self.odds_threshold)
         return BirthDecision(
-            accepted=bool(odds > self.odds_threshold),
-            branch=branch if odds > self.odds_threshold else "clutter",
+            accepted=accepted,
+            branch=branch if accepted else "clutter",
             odds=float(odds),
             atom_index=atom_index,
+            clutter_intensity=resolved_clutter_intensity,
         )
 
-    def process(self, measurement: np.ndarray | list[float] | tuple[float, ...]) -> BirthDecision:
+    def process(
+        self,
+        measurement: np.ndarray | list[float] | tuple[float, ...],
+        clutter_intensity: float | None = None,
+    ) -> BirthDecision:
         """Update the DP birth model if the measurement is accepted as a birth."""
 
         measurement_vec = np.asarray(measurement, dtype=float)
-        decision = self.decide(measurement_vec)
+        decision = self.decide(measurement_vec, clutter_intensity=clutter_intensity)
         if not decision.accepted:
             return decision
 
@@ -148,6 +165,7 @@ class DirichletProcessBirthModel:
             odds=decision.odds,
             atom_index=atom_index,
             state=state,
+            clutter_intensity=decision.clutter_intensity,
         )
 
     def decay_counts(self, retention: float = 0.995) -> None:
@@ -164,3 +182,11 @@ class DirichletProcessBirthModel:
         if len(self.atoms) > self.max_atoms:
             self.atoms.sort(key=lambda atom: atom.count, reverse=True)
             self.atoms = self.atoms[: self.max_atoms]
+
+    def _resolve_clutter_intensity(self, clutter_intensity: float | None) -> float:
+        if clutter_intensity is None:
+            return float(self.clutter_intensity)
+        clutter_intensity = float(clutter_intensity)
+        if clutter_intensity <= 0.0:
+            raise ValueError("clutter_intensity must be positive")
+        return clutter_intensity
