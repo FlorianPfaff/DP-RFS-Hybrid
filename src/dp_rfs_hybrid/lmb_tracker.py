@@ -20,6 +20,7 @@ class Track:
     existence: float
     age: int = 0
     missed: int = 0
+    birth_learning_pending: bool = False
 
 
 @dataclass(frozen=True)
@@ -29,6 +30,7 @@ class StepSummary:
     clutter: list[int]
     missed_tracks: list[int]
     clutter_updates: list[tuple[int, float]] = field(default_factory=list)
+    birth_learning_updates: list[int] = field(default_factory=list)
 
 
 @dataclass
@@ -56,6 +58,10 @@ class LabeledMultiBernoulliTracker:
     max_tracks: int = 64
     clutter_responsibility_learning_rate: float = 1.0
     min_clutter_responsibility_to_learn: float = 0.0
+    delayed_birth_learning: bool = False
+    birth_confirmation_age: int = 2
+    birth_confirmation_existence: float = 0.7
+    birth_learning_weight: float = 1.0
     tracks: list[Track] = field(default_factory=list)
     next_label: int = 1
 
@@ -72,6 +78,12 @@ class LabeledMultiBernoulliTracker:
             raise ValueError("clutter_responsibility_learning_rate must be in [0, 1]")
         if not 0.0 <= self.min_clutter_responsibility_to_learn <= 1.0:
             raise ValueError("min_clutter_responsibility_to_learn must be in [0, 1]")
+        if self.birth_confirmation_age < 0:
+            raise ValueError("birth_confirmation_age must be nonnegative")
+        if not 0.0 <= self.birth_confirmation_existence <= 1.0:
+            raise ValueError("birth_confirmation_existence must be in [0, 1]")
+        if self.birth_learning_weight <= 0.0:
+            raise ValueError("birth_learning_weight must be positive")
 
     def predict(self) -> None:
         for track in self.tracks:
@@ -130,10 +142,16 @@ class LabeledMultiBernoulliTracker:
             if measurement_index in assigned_measurement_indices:
                 continue
             clutter_intensity = self._clutter_intensity(measurement)
-            decision = self.birth_model.process(
-                measurement,
-                clutter_intensity=clutter_intensity,
-            )
+            if self.delayed_birth_learning:
+                decision = self.birth_model.preview(
+                    measurement,
+                    clutter_intensity=clutter_intensity,
+                )
+            else:
+                decision = self.birth_model.process(
+                    measurement,
+                    clutter_intensity=clutter_intensity,
+                )
             clutter_responsibility = self._clutter_responsibility_from_birth_odds(decision.odds)
             clutter_evidence.append((measurement_index, measurement, clutter_responsibility))
             if decision.accepted and decision.state is not None:
@@ -145,11 +163,13 @@ class LabeledMultiBernoulliTracker:
                         label=label,
                         state=decision.state,
                         existence=self.birth_model.birth_probability,
+                        birth_learning_pending=self.delayed_birth_learning,
                     )
                 )
             else:
                 clutter.append(measurement_index)
 
+        birth_learning_updates = self._update_confirmed_birth_learning()
         clutter_updates = self._update_clutter_model(clutter_evidence)
         assignment_labels = [
             (self.tracks[track_index].label, measurement_index)
@@ -165,6 +185,7 @@ class LabeledMultiBernoulliTracker:
             clutter=clutter,
             missed_tracks=missed_tracks,
             clutter_updates=clutter_updates,
+            birth_learning_updates=birth_learning_updates,
         )
 
     def estimates(self, existence_threshold: float = 0.5) -> list[Track]:
@@ -244,4 +265,20 @@ class LabeledMultiBernoulliTracker:
             learned_responsibility = self._learned_clutter_responsibility(responsibility)
             self.clutter_model.update(measurement, responsibility=learned_responsibility)
             updates.append((measurement_index, learned_responsibility))
+        return updates
+
+    def _update_confirmed_birth_learning(self) -> list[int]:
+        if not self.delayed_birth_learning:
+            return []
+        updates: list[int] = []
+        for track in self.tracks:
+            if not track.birth_learning_pending:
+                continue
+            if track.age < self.birth_confirmation_age:
+                continue
+            if track.existence < self.birth_confirmation_existence:
+                continue
+            self.birth_model.learn_from_state(track.state, weight=self.birth_learning_weight)
+            track.birth_learning_pending = False
+            updates.append(track.label)
         return updates
