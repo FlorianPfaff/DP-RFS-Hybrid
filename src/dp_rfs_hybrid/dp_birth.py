@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from .gaussian import GaussianState
+from .gaussian import GaussianState, gaussian_pdf
 
 
 @dataclass
@@ -28,6 +28,15 @@ class BirthDecision:
     atom_index: int | None = None
     state: GaussianState | None = None
     clutter_intensity: float | None = None
+
+
+@dataclass(frozen=True)
+class BirthLearningUpdate:
+    """Diagnostic result of delayed birth-model learning."""
+
+    atom_index: int
+    branch: str
+    weight: float
 
 
 @dataclass
@@ -122,6 +131,46 @@ class DirichletProcessBirthModel:
             clutter_intensity=resolved_clutter_intensity,
         )
 
+    def preview(
+        self,
+        measurement: np.ndarray | list[float] | tuple[float, ...],
+        clutter_intensity: float | None = None,
+    ) -> BirthDecision:
+        """Create a birth state without updating DP birth atoms.
+
+        This is used for delayed-confirmation learning: a Bernoulli birth track can
+        be spawned immediately, while the DP birth distribution is updated only if
+        that track later survives with sufficiently high existence probability.
+        """
+
+        measurement_vec = np.asarray(measurement, dtype=float)
+        decision = self.decide(measurement_vec, clutter_intensity=clutter_intensity)
+        if not decision.accepted:
+            return decision
+        if decision.branch == "existing":
+            assert decision.atom_index is not None
+            state, _ = self.atoms[decision.atom_index].state.update(
+                measurement_vec,
+                self.measurement_matrix,
+                self.measurement_noise,
+            )
+            atom_index = decision.atom_index
+        else:
+            state, _ = self.base_state.update(
+                measurement_vec,
+                self.measurement_matrix,
+                self.measurement_noise,
+            )
+            atom_index = None
+        return BirthDecision(
+            accepted=True,
+            branch=decision.branch,
+            odds=decision.odds,
+            atom_index=atom_index,
+            state=state,
+            clutter_intensity=decision.clutter_intensity,
+        )
+
     def process(
         self,
         measurement: np.ndarray | list[float] | tuple[float, ...],
@@ -167,6 +216,52 @@ class DirichletProcessBirthModel:
             state=state,
             clutter_intensity=decision.clutter_intensity,
         )
+
+    def learn_from_state(self, state: GaussianState, weight: float = 1.0) -> BirthLearningUpdate:
+        """Update the DP birth atoms from a confirmed newborn track state."""
+
+        weight = float(weight)
+        if weight <= 0.0:
+            raise ValueError("weight must be positive")
+        self.scan_index += 1
+        if not self.atoms:
+            self.atoms.append(BirthAtom(state, count=weight, last_updated=self.scan_index))
+            return BirthLearningUpdate(atom_index=0, branch="new", weight=weight)
+
+        existing_scores = [
+            atom.count
+            * gaussian_pdf(
+                state.mean,
+                atom.state.mean,
+                atom.state.covariance + state.covariance,
+            )
+            for atom in self.atoms
+        ]
+        new_score = self.alpha * gaussian_pdf(
+            state.mean,
+            self.base_state.mean,
+            self.base_state.covariance + state.covariance,
+        )
+        best_existing_index = int(np.argmax(existing_scores))
+        if existing_scores[best_existing_index] >= new_score:
+            atom = self.atoms[best_existing_index]
+            updated_count = atom.count + weight
+            updated_mean = (atom.count * atom.state.mean + weight * state.mean) / updated_count
+            updated_covariance = (
+                atom.count * atom.state.covariance + weight * state.covariance
+            ) / updated_count
+            atom.state = GaussianState(updated_mean, updated_covariance)
+            atom.count = updated_count
+            atom.last_updated = self.scan_index
+            atom_index = best_existing_index
+            branch = "existing"
+        else:
+            self.atoms.append(BirthAtom(state, count=weight, last_updated=self.scan_index))
+            atom_index = len(self.atoms) - 1
+            branch = "new"
+
+        self.prune()
+        return BirthLearningUpdate(atom_index=atom_index, branch=branch, weight=weight)
 
     def decay_counts(self, retention: float = 0.995) -> None:
         """Apply mild forgetting so stale atoms can eventually be pruned."""
