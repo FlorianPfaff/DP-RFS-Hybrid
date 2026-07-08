@@ -55,3 +55,25 @@ def test_measurement_can_be_rejected_as_clutter() -> None:
     assert not decision.accepted
     assert decision.branch == "clutter"
     assert len(model.atoms) == 0
+
+
+def test_preview_birth_does_not_update_atoms() -> None:
+    model = make_birth_model()
+
+    decision = model.preview(np.array([12.0, -3.0]))
+
+    assert decision.accepted
+    assert decision.state is not None
+    assert len(model.atoms) == 0
+
+
+def test_confirmed_state_learning_creates_birth_atom() -> None:
+    model = make_birth_model()
+    decision = model.preview(np.array([12.0, -3.0]))
+
+    update = model.learn_from_state(decision.state)
+
+    assert update.branch == "new"
+    assert update.atom_index == 0
+    assert len(model.atoms) == 1
+    assert model.atoms[0].count == 1.0
