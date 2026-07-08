@@ -101,7 +101,11 @@ def test_clutter_responsibility_learning_rate_attenuates_updates() -> None:
 
     assert len(clutter_model.atoms) == 1
     assert summary.clutter_updates[0][1] == pytest.approx(0.25, abs=1e-3)
-    assert clutter_model.atoms[0].count == pytest.approx(summary.clutter_updates[0][1], rel=1e-6)
+    # The tracker applies clutter-model count decay at the end of each scan.
+    assert clutter_model.atoms[0].count == pytest.approx(
+        summary.clutter_updates[0][1] * 0.995,
+        rel=1e-6,
+    )
 
 
 def test_min_clutter_responsibility_gate_can_skip_learning() -> None:
