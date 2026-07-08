@@ -128,3 +128,32 @@ def test_clutter_learning_configuration_validates_probabilities() -> None:
 
     with pytest.raises(ValueError, match="min_clutter_responsibility_to_learn"):
         make_tracker(min_clutter_responsibility_to_learn=-0.1)
+
+
+def test_delayed_birth_learning_waits_for_confirmation() -> None:
+    tracker = make_tracker(
+        delayed_birth_learning=True,
+        birth_confirmation_age=2,
+        birth_confirmation_existence=0.5,
+    )
+
+    first = tracker.step(np.array([[8.0, 2.0]]))
+    second = tracker.step(np.array([[8.1, 2.1]]))
+    third = tracker.step(np.array([[8.2, 2.2]]))
+
+    assert first.births == [1]
+    assert second.birth_learning_updates == []
+    assert third.birth_learning_updates == [1]
+    assert len(tracker.birth_model.atoms) == 1
+    assert not tracker.tracks[0].birth_learning_pending
+
+
+def test_delayed_birth_learning_configuration_validates_probabilities() -> None:
+    with pytest.raises(ValueError, match="birth_confirmation_age"):
+        make_tracker(delayed_birth_learning=True, birth_confirmation_age=-1)
+
+    with pytest.raises(ValueError, match="birth_confirmation_existence"):
+        make_tracker(delayed_birth_learning=True, birth_confirmation_existence=1.5)
+
+    with pytest.raises(ValueError, match="birth_learning_weight"):
+        make_tracker(delayed_birth_learning=True, birth_learning_weight=0.0)
