@@ -144,6 +144,21 @@ def test_delayed_birth_learning_defers_birth_atom_update_until_confirmation() ->
     assert not tracker.tracks[0].pending_birth_learning
 
 
+def test_delayed_birth_learning_respects_confirmation_threshold() -> None:
+    tracker = make_tracker(
+        delayed_birth_learning=True,
+        birth_confirmation_age=1,
+        birth_confirmation_existence=1.0,
+    )
+
+    tracker.step(np.array([[8.0, 2.0]]))
+    second_summary = tracker.step(np.array([[8.1, 2.1]]))
+
+    assert second_summary.confirmed_births == []
+    assert len(tracker.birth_model.atoms) == 0
+    assert tracker.tracks[0].pending_birth_learning
+
+
 def test_delayed_birth_learning_validates_confirmation_parameters() -> None:
     with pytest.raises(ValueError, match="birth_confirmation_age"):
         make_tracker(delayed_birth_learning=True, birth_confirmation_age=-1)
