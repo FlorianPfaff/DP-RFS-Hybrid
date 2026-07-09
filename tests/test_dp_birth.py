@@ -83,3 +83,45 @@ def test_default_birth_rate_preserves_legacy_scale() -> None:
     model = make_birth_model()
 
     assert model.birth_rate == pytest.approx(model.alpha * model.birth_probability)
+
+
+def test_nearby_confirmed_births_reuse_one_atom() -> None:
+    model = make_birth_model()
+    first_state = GaussianState(
+        mean=np.array([8.0, 2.0, 0.0, 0.0]),
+        covariance=np.diag([0.25, 0.25, 1.0, 1.0]),
+    )
+    second_state = GaussianState(
+        mean=np.array([8.2, 2.2, 0.0, 0.0]),
+        covariance=np.diag([0.25, 0.25, 1.0, 1.0]),
+    )
+
+    first_atom = model.learn_confirmed_state(first_state)
+    second_atom = model.learn_confirmed_state(second_state)
+
+    assert first_atom == 0
+    assert second_atom == 0
+    assert len(model.atoms) == 1
+    assert model.atoms[0].count == pytest.approx(2.0)
+    assert model.atoms[0].state.mean == pytest.approx(np.array([8.1, 2.1, 0.0, 0.0]))
+    assert model.atoms[0].state.covariance[0, 0] > first_state.covariance[0, 0]
+
+
+def test_distant_confirmed_births_create_separate_atoms() -> None:
+    model = make_birth_model()
+    first_state = GaussianState(
+        mean=np.array([8.0, 2.0, 0.0, 0.0]),
+        covariance=np.diag([0.25, 0.25, 1.0, 1.0]),
+    )
+    second_state = GaussianState(
+        mean=np.array([30.0, 30.0, 0.0, 0.0]),
+        covariance=np.diag([0.25, 0.25, 1.0, 1.0]),
+    )
+
+    first_atom = model.learn_confirmed_state(first_state)
+    second_atom = model.learn_confirmed_state(second_state)
+
+    assert first_atom == 0
+    assert second_atom == 1
+    assert len(model.atoms) == 2
+    assert [atom.count for atom in model.atoms] == pytest.approx([1.0, 1.0])

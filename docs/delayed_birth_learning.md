@@ -27,7 +27,9 @@ When delayed learning is enabled:
 2. if accepted, spawn a tentative track from the predicted birth state;
 3. store pending birth evidence on the track;
 4. do not update `birth_model.atoms` immediately;
-5. after the track is old enough and has high posterior existence, update the DP birth model with the track's smoothed state.
+5. after the track is old enough and has high posterior existence, recluster
+   the confirmed state against the current DP birth atoms before updating the
+   winning atom or creating a new one.
 
 ## Why this matters
 
@@ -35,6 +37,5 @@ This is the birth-side analogue of clutter responsibility gating. The RFS layer 
 
 ## Open design choices
 
-- Whether confirmed evidence updates the originally selected atom or reclusters against the current birth atoms.
 - Whether confirmation should use the original birth measurement, the current filtered state, or a short trajectory smoother.
 - Whether false tentative births should provide negative evidence to the birth model or only fail to update it.

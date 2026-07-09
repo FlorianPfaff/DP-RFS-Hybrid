@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from .gaussian import GaussianState
+from .gaussian import GaussianState, gaussian_pdf
 
 
 @dataclass
@@ -200,17 +200,65 @@ class DirichletProcessBirthModel:
     def learn_confirmed_state(self, state: GaussianState, count: float = 1.0) -> int:
         """Update the DP birth model from confirmed birth evidence.
 
-        The first implementation appends a new active atom from the confirmed
-        track state. A later refinement can recluster this evidence against
-        existing birth atoms or use smoothed trajectory estimates.
+        Confirmed evidence is reclustered in state space rather than appended
+        blindly. Existing atoms are scored by the overlap between the confirmed
+        Gaussian state and the atom Gaussian. The residual/new-atom branch is
+        scored by the overlap with the base state. If an existing atom wins, the
+        confirmed state is merged into that atom with count-weighted moments.
         """
 
         if count <= 0.0:
             raise ValueError("count must be positive")
+        self._validate_confirmed_state(state)
         self.scan_index += 1
-        self.atoms.append(BirthAtom(state=state, count=count, last_updated=self.scan_index))
+
+        existing_scores = self.score_existing_confirmed_states(state)
+        new_score = self.score_new_confirmed_state(state)
+        if existing_scores and max(existing_scores) >= new_score:
+            atom_index = int(np.argmax(existing_scores))
+            atom = self.atoms[atom_index]
+            atom.state = self._merge_gaussian_states(
+                old_state=atom.state,
+                old_count=atom.count,
+                confirmed_state=state,
+                confirmed_count=count,
+            )
+            atom.count += count
+            atom.last_updated = self.scan_index
+            updated_atom = atom
+        else:
+            updated_atom = BirthAtom(state=state, count=count, last_updated=self.scan_index)
+            self.atoms.append(updated_atom)
+
         self.prune()
-        return len(self.atoms) - 1
+        for atom_index, atom in enumerate(self.atoms):
+            if atom is updated_atom:
+                return atom_index
+        return -1
+
+    def score_existing_confirmed_states(self, state: GaussianState) -> list[float]:
+        """Score confirmed birth evidence against active birth atoms."""
+
+        self._validate_confirmed_state(state)
+        return [
+            atom.count
+            * gaussian_pdf(
+                state.mean,
+                atom.state.mean,
+                atom.state.covariance + state.covariance,
+            )
+            for atom in self.atoms
+        ]
+
+    def score_new_confirmed_state(self, state: GaussianState) -> float:
+        """Score confirmed birth evidence against the residual DP branch."""
+
+        self._validate_confirmed_state(state)
+        return self.alpha * gaussian_pdf(
+            state.mean,
+            self.base_state.mean,
+            self.base_state.covariance + state.covariance,
+        )
 
     def process(
         self,
@@ -282,3 +330,29 @@ class DirichletProcessBirthModel:
         if clutter_intensity <= 0.0:
             raise ValueError("clutter_intensity must be positive")
         return clutter_intensity
+
+    def _validate_confirmed_state(self, state: GaussianState) -> None:
+        if state.dim != self.base_state.dim:
+            raise ValueError("confirmed state dimension must match base state dimension")
+
+    @staticmethod
+    def _merge_gaussian_states(
+        old_state: GaussianState,
+        old_count: float,
+        confirmed_state: GaussianState,
+        confirmed_count: float,
+    ) -> GaussianState:
+        new_count = old_count + confirmed_count
+        new_mean = (
+            old_count * old_state.mean + confirmed_count * confirmed_state.mean
+        ) / new_count
+        old_delta = old_state.mean - new_mean
+        confirmed_delta = confirmed_state.mean - new_mean
+        new_covariance = (
+            old_count
+            * (old_state.covariance + np.outer(old_delta, old_delta))
+            + confirmed_count
+            * (confirmed_state.covariance + np.outer(confirmed_delta, confirmed_delta))
+        ) / new_count
+        new_covariance = 0.5 * (new_covariance + new_covariance.T)
+        return GaussianState(mean=new_mean, covariance=new_covariance)
