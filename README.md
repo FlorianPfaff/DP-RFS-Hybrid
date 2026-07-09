@@ -20,13 +20,14 @@ DP birth atoms   = recurring birth regions
 DP clutter atoms = recurring clutter regimes
 ```
 
-For clutter, the implementation keeps the normalized density and the Poisson rate separate:
+For birth and clutter, the implementation keeps normalized densities separate from RFS intensity/rate scales:
 
 ```text
+D_B(x)   = lambda_B * b(x)
 kappa(z) = lambda_C * c(z)
 ```
 
-where `DirichletProcessClutterModel` estimates `c(z)` and stores `lambda_C` as `rate`. `FixedGaussianMixtureClutterModel` implements the same density/intensity interface without learning, so it can be used as a hand-specified baseline.
+`DirichletProcessBirthModel` estimates a normalized posterior-predictive birth density and stores the birth mass as `birth_rate`. `DirichletProcessClutterModel` estimates `c(z)` and stores `lambda_C` as `rate`. `FixedGaussianMixtureClutterModel` implements the same density/intensity interface without learning, so it can be used as a hand-specified baseline.
 
 The tracker can optionally consume a clutter model: association odds, Bernoulli existence updates, and birth decisions use `clutter_model.intensity(z)` instead of a fixed scalar clutter intensity. The tracker then feeds fractional clutter responsibilities back into adaptive clutter models. Responsibility learning can be attenuated or gated via `clutter_responsibility_learning_rate` and `min_clutter_responsibility_to_learn`.
 
