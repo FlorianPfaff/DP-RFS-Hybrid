@@ -8,9 +8,13 @@ from .dp_clutter import (
     FixedGaussianMixtureClutterModel,
 )
 from .experiments import (
+    STRUCTURED_CLUTTER_HOTSPOT,
+    STRUCTURED_CLUTTER_TRACKER_KINDS,
+    STRUCTURED_CLUTTER_TRUE_BIRTH,
     StructuredClutterExperimentResult,
     StructuredClutterScanRecord,
     make_structured_clutter_tracker,
+    make_structured_clutter_tracker_by_kind,
     run_structured_clutter_experiment,
     simulate_structured_clutter_measurements,
 )
@@ -27,12 +31,16 @@ __all__ = [
     "FixedGaussianMixtureClutterModel",
     "GaussianState",
     "LabeledMultiBernoulliTracker",
+    "STRUCTURED_CLUTTER_HOTSPOT",
+    "STRUCTURED_CLUTTER_TRACKER_KINDS",
+    "STRUCTURED_CLUTTER_TRUE_BIRTH",
     "StepSummary",
     "StructuredClutterExperimentResult",
     "StructuredClutterScanRecord",
     "Track",
     "gaussian_pdf",
     "make_structured_clutter_tracker",
+    "make_structured_clutter_tracker_by_kind",
     "run_structured_clutter_experiment",
     "simulate_structured_clutter_measurements",
 ]
