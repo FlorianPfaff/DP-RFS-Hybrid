@@ -1,9 +1,13 @@
 import numpy as np
+import pytest
 
 from dp_rfs_hybrid import DirichletProcessBirthModel, GaussianState
 
 
-def make_birth_model(clutter_intensity: float = 1e-4) -> DirichletProcessBirthModel:
+def make_birth_model(
+    clutter_intensity: float = 1e-4,
+    birth_rate: float | None = None,
+) -> DirichletProcessBirthModel:
     measurement = np.array(
         [
             [1.0, 0.0, 0.0, 0.0],
@@ -20,6 +24,7 @@ def make_birth_model(clutter_intensity: float = 1e-4) -> DirichletProcessBirthMo
         measurement_noise=np.diag([0.25, 0.25]),
         clutter_intensity=clutter_intensity,
         birth_probability=0.8,
+        birth_rate=birth_rate,
         odds_threshold=10.0,
     )
 
@@ -31,6 +36,8 @@ def test_new_measurement_creates_birth_atom() -> None:
 
     assert decision.accepted
     assert decision.branch == "new"
+    assert decision.birth_density is not None
+    assert decision.birth_intensity is not None
     assert len(model.atoms) == 1
     assert model.atoms[0].count == 1.0
 
@@ -55,3 +62,24 @@ def test_measurement_can_be_rejected_as_clutter() -> None:
     assert not decision.accepted
     assert decision.branch == "clutter"
     assert len(model.atoms) == 0
+
+
+def test_birth_rate_scales_odds_without_changing_predictive_density() -> None:
+    measurement = np.array([12.0, -3.0])
+    low_rate = make_birth_model(birth_rate=1.0)
+    high_rate = make_birth_model(birth_rate=6.0)
+
+    low_decision = low_rate.decide(measurement)
+    high_decision = high_rate.decide(measurement)
+
+    assert low_decision.birth_density == pytest.approx(high_decision.birth_density)
+    assert high_decision.birth_intensity == pytest.approx(6.0 * low_decision.birth_intensity)
+    assert high_decision.odds == pytest.approx(6.0 * low_decision.odds)
+    assert not low_decision.accepted
+    assert high_decision.accepted
+
+
+def test_default_birth_rate_preserves_legacy_scale() -> None:
+    model = make_birth_model()
+
+    assert model.birth_rate == pytest.approx(model.alpha * model.birth_probability)
