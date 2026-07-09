@@ -122,6 +122,52 @@ class DirichletProcessBirthModel:
             clutter_intensity=resolved_clutter_intensity,
         )
 
+    def birth_state_from_decision(
+        self,
+        measurement: np.ndarray | list[float] | tuple[float, ...],
+        decision: BirthDecision,
+    ) -> GaussianState | None:
+        """Create a tentative birth state without updating DP atoms.
+
+        This supports delayed birth learning: a measurement can initialize a
+        tentative Bernoulli track immediately, while the DP birth density is only
+        updated later if the track is confirmed by the RFS layer.
+        """
+
+        if not decision.accepted:
+            return None
+        measurement_vec = np.asarray(measurement, dtype=float)
+        if decision.branch == "existing":
+            if decision.atom_index is None:
+                raise ValueError("existing-atom birth decision must include atom_index")
+            posterior, _ = self.atoms[decision.atom_index].state.update(
+                measurement_vec,
+                self.measurement_matrix,
+                self.measurement_noise,
+            )
+            return posterior
+        posterior, _ = self.base_state.update(
+            measurement_vec,
+            self.measurement_matrix,
+            self.measurement_noise,
+        )
+        return posterior
+
+    def learn_confirmed_state(self, state: GaussianState, count: float = 1.0) -> int:
+        """Update the DP birth model from confirmed birth evidence.
+
+        The first implementation appends a new active atom from the confirmed
+        track state. A later refinement can recluster this evidence against
+        existing birth atoms or use smoothed trajectory estimates.
+        """
+
+        if count <= 0.0:
+            raise ValueError("count must be positive")
+        self.scan_index += 1
+        self.atoms.append(BirthAtom(state=state, count=count, last_updated=self.scan_index))
+        self.prune()
+        return len(self.atoms) - 1
+
     def process(
         self,
         measurement: np.ndarray | list[float] | tuple[float, ...],
