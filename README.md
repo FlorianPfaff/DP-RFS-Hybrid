@@ -124,6 +124,7 @@ tests/
 - Finite active DP atoms, not full posterior sampling of the random measure.
 - Gaussian birth/clutter atoms and linear-Gaussian tracking only.
 - Heuristic birth-vs-clutter odds threshold.
-- DP clutter feedback is still approximate and single-scan; it does not yet use delayed confirmation, smoothing, or a full multi-hypothesis responsibility calculation.
+- DP clutter feedback is still approximate and single-scan; it does not yet use smoothing or a full multi-hypothesis responsibility calculation.
+- Confirmed birth evidence currently appends a new birth atom; it does not yet recluster confirmed evidence against existing atoms.
 
 Those restrictions are intentional for the first artifact: the goal is to isolate whether adaptive nonparametric nuisance structure helps before adding a larger RFS backend.
