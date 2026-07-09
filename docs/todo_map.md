@@ -4,6 +4,7 @@ Current implementation status and next work items.
 
 ## Completed recently
 
+- DP birth model now separates normalized posterior-predictive birth density from the scalar `birth_rate` scale.
 - DP clutter model exists as a normalized density plus separate Poisson rate.
 - LMB-style tracker accepts an optional clutter model.
 - Association, existence updates, and birth decisions can use local clutter intensity.
@@ -17,11 +18,11 @@ Current implementation status and next work items.
 
 ## Highest-value next items
 
-1. Add a birth-rate model separated from DP birth density.
-2. Reclustering for confirmed birth evidence instead of always appending a new atom.
-3. Add a PMBM/GLMB posterior-predictive insertion interface sketch as code, not only docs.
-4. Harden validation and add more shape/error tests.
-5. Add harder structured-clutter scenarios: moving hotspot, unknown GMM baseline, nonstationary clutter rate.
+1. Reclustering for confirmed birth evidence instead of always appending a new atom.
+2. Add a PMBM/GLMB posterior-predictive insertion interface sketch as code, not only docs.
+3. Harden validation and add more shape/error tests.
+4. Add harder structured-clutter scenarios: moving hotspot, unknown GMM baseline, nonstationary clutter rate.
+5. Add explicit birth-rate experiments/ablations.
 
 ## Paper-facing next items
 
