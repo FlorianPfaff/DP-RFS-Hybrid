@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from .gaussian import GaussianState
+from .gaussian import GaussianState, gaussian_pdf
 
 
 @dataclass
@@ -197,20 +197,74 @@ class DirichletProcessBirthModel:
         )
         return posterior
 
+    def score_confirmed_state_existing_atoms(self, state: GaussianState) -> list[float]:
+        """Score confirmed birth evidence against active birth atoms."""
+
+        return [
+            atom.count
+            * gaussian_pdf(
+                state.mean,
+                atom.state.mean,
+                atom.state.covariance + state.covariance,
+            )
+            for atom in self.atoms
+        ]
+
+    def score_confirmed_state_new_atom(self, state: GaussianState) -> float:
+        """Score confirmed birth evidence under the residual new-atom branch."""
+
+        return self.alpha * gaussian_pdf(
+            state.mean,
+            self.base_state.mean,
+            self.base_state.covariance + state.covariance,
+        )
+
     def learn_confirmed_state(self, state: GaussianState, count: float = 1.0) -> int:
         """Update the DP birth model from confirmed birth evidence.
 
-        The first implementation appends a new active atom from the confirmed
-        track state. A later refinement can recluster this evidence against
-        existing birth atoms or use smoothed trajectory estimates.
+        Confirmed evidence is reclustered against active birth atoms. Nearby
+        confirmed newborn tracks update a reusable birth atom; distant confirmed
+        newborn tracks instantiate a new atom through the residual DP branch.
         """
 
         if count <= 0.0:
             raise ValueError("count must be positive")
+        existing_scores = self.score_confirmed_state_existing_atoms(state)
+        new_score = self.score_confirmed_state_new_atom(state)
         self.scan_index += 1
+        if existing_scores:
+            best_atom_index = int(np.argmax(existing_scores))
+            if existing_scores[best_atom_index] >= new_score:
+                self._merge_confirmed_state_into_atom(best_atom_index, state, count)
+                self.atoms[best_atom_index].last_updated = self.scan_index
+                self.prune()
+                return best_atom_index
         self.atoms.append(BirthAtom(state=state, count=count, last_updated=self.scan_index))
         self.prune()
         return len(self.atoms) - 1
+
+    def _merge_confirmed_state_into_atom(
+        self,
+        atom_index: int,
+        state: GaussianState,
+        count: float,
+    ) -> None:
+        atom = self.atoms[atom_index]
+        old_count = atom.count
+        new_count = old_count + count
+        old_mean = atom.state.mean
+        new_mean = state.mean
+        merged_mean = (old_count * old_mean + count * new_mean) / new_count
+        old_delta = old_mean - merged_mean
+        new_delta = new_mean - merged_mean
+        merged_covariance = (
+            old_count
+            * (atom.state.covariance + np.outer(old_delta, old_delta))
+            + count * (state.covariance + np.outer(new_delta, new_delta))
+        ) / new_count
+        merged_covariance = 0.5 * (merged_covariance + merged_covariance.T)
+        atom.state = GaussianState(merged_mean, merged_covariance)
+        atom.count = new_count
 
     def process(
         self,
