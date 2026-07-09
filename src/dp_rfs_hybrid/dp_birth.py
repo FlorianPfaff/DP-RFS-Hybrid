@@ -28,21 +28,27 @@ class BirthDecision:
     atom_index: int | None = None
     state: GaussianState | None = None
     clutter_intensity: float | None = None
+    birth_density: float | None = None
+    birth_intensity: float | None = None
 
 
 @dataclass
 class DirichletProcessBirthModel:
-    """Finite active approximation to a DP Gaussian birth model.
+    """Finite active approximation to a DP Gaussian birth-density model.
+
+    The DP layer models a normalized posterior-predictive birth density. The
+    scalar ``birth_rate`` supplies the separate RFS birth mass/intensity scale.
+    This mirrors the clutter convention ``kappa(z) = lambda_C c(z)`` and avoids
+    using occupied DP component counts as a target-cardinality proxy.
 
     Existing atoms receive predictive mass proportional to ``count``. A new atom
     receives mass proportional to ``alpha`` under the base Gaussian state. The
-    best DP-birth explanation is accepted only when its odds against clutter
-    exceed ``odds_threshold``.
+    accepted birth intensity is
 
-    The model keeps a default scalar ``clutter_intensity`` for simple experiments,
-    but :meth:`decide` and :meth:`process` can receive a measurement-specific
-    override. This is the insertion point for adaptive clutter models such as a
-    posterior-predictive DP clutter density.
+    ``birth_rate * posterior_predictive_birth_density(z)``.
+
+    If ``birth_rate`` is left as ``None``, the implementation uses
+    ``alpha * birth_probability`` for backwards-compatible default behavior.
     """
 
     alpha: float
@@ -52,6 +58,7 @@ class DirichletProcessBirthModel:
     clutter_intensity: float
     birth_probability: float = 0.8
     odds_threshold: float = 10.0
+    birth_rate: float | None = None
     max_atoms: int = 16
     prune_below_count: float = 0.05
     atoms: list[BirthAtom] = field(default_factory=list)
@@ -66,10 +73,20 @@ class DirichletProcessBirthModel:
             raise ValueError("birth_probability must be in (0, 1]")
         if self.odds_threshold <= 0:
             raise ValueError("odds_threshold must be positive")
+        if self.birth_rate is None:
+            self.birth_rate = self.alpha * self.birth_probability
+        if self.birth_rate <= 0.0:
+            raise ValueError("birth_rate must be positive")
         if self.max_atoms <= 0:
             raise ValueError("max_atoms must be positive")
         self.measurement_matrix = np.asarray(self.measurement_matrix, dtype=float)
         self.measurement_noise = np.asarray(self.measurement_noise, dtype=float)
+
+    @property
+    def total_count(self) -> float:
+        """Return the active DP birth-atom count mass."""
+
+        return float(sum(atom.count for atom in self.atoms))
 
     def score_existing_atoms(self, measurement: np.ndarray) -> list[float]:
         return [
@@ -88,6 +105,27 @@ class DirichletProcessBirthModel:
             self.measurement_matrix,
             self.measurement_noise,
         )
+
+    def predictive_birth_density(
+        self,
+        measurement: np.ndarray | list[float] | tuple[float, ...],
+    ) -> float:
+        """Evaluate the normalized DP posterior-predictive birth density."""
+
+        measurement_vec = np.asarray(measurement, dtype=float)
+        existing_scores = self.score_existing_atoms(measurement_vec)
+        new_score = self.score_new_atom(measurement_vec)
+        normalizer = self.alpha + self.total_count
+        return float((sum(existing_scores) + new_score) / normalizer)
+
+    def birth_intensity(
+        self,
+        measurement: np.ndarray | list[float] | tuple[float, ...],
+    ) -> float:
+        """Evaluate the measurement-space birth intensity used in odds tests."""
+
+        assert self.birth_rate is not None
+        return float(self.birth_rate * self.predictive_birth_density(measurement))
 
     def decide(
         self,
@@ -112,7 +150,11 @@ class DirichletProcessBirthModel:
                 atom_index = best_existing_index
                 best_score = best_existing_score
 
-        odds = self.birth_probability * best_score / resolved_clutter_intensity
+        normalizer = self.alpha + self.total_count
+        birth_density = float((sum(existing_scores) + new_score) / normalizer)
+        assert self.birth_rate is not None
+        birth_intensity = float(self.birth_rate * birth_density)
+        odds = birth_intensity / resolved_clutter_intensity
         accepted = bool(odds > self.odds_threshold)
         return BirthDecision(
             accepted=accepted,
@@ -120,6 +162,8 @@ class DirichletProcessBirthModel:
             odds=float(odds),
             atom_index=atom_index,
             clutter_intensity=resolved_clutter_intensity,
+            birth_density=birth_density,
+            birth_intensity=birth_intensity,
         )
 
     def birth_state_from_decision(
@@ -212,6 +256,8 @@ class DirichletProcessBirthModel:
             atom_index=atom_index,
             state=state,
             clutter_intensity=decision.clutter_intensity,
+            birth_density=decision.birth_density,
+            birth_intensity=decision.birth_intensity,
         )
 
     def decay_counts(self, retention: float = 0.995) -> None:
