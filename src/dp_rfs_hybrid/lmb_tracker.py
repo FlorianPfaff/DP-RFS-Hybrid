@@ -201,6 +201,8 @@ class LabeledMultiBernoulliTracker:
             atom_index=decision.atom_index,
             state=state,
             clutter_intensity=decision.clutter_intensity,
+            birth_density=decision.birth_density,
+            birth_intensity=decision.birth_intensity,
         )
 
     def _confirm_pending_births(self) -> list[int]:
