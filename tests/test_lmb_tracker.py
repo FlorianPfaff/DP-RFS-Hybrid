@@ -76,6 +76,43 @@ def test_nearby_followup_measurement_updates_existing_track() -> None:
     assert len(tracker.tracks) == 1
 
 
+def test_delayed_birth_learning_waits_until_track_confirmation() -> None:
+    tracker = make_tracker(
+        delayed_birth_learning=True,
+        birth_confirmation_age=1,
+        birth_confirmation_existence=0.5,
+    )
+
+    first_summary = tracker.step(np.array([[8.0, 2.0]]))
+
+    assert first_summary.births == [1]
+    assert first_summary.confirmed_births == []
+    assert len(tracker.birth_model.atoms) == 0
+    assert tracker.tracks[0].pending_birth_learning
+
+    second_summary = tracker.step(np.array([[8.1, 2.1]]))
+
+    assert second_summary.assignments == [(1, 0)]
+    assert second_summary.confirmed_births == [1]
+    assert len(tracker.birth_model.atoms) == 1
+    assert not tracker.tracks[0].pending_birth_learning
+
+
+def test_delayed_birth_learning_respects_confirmation_threshold() -> None:
+    tracker = make_tracker(
+        delayed_birth_learning=True,
+        birth_confirmation_age=1,
+        birth_confirmation_existence=1.0,
+    )
+
+    tracker.step(np.array([[8.0, 2.0]]))
+    second_summary = tracker.step(np.array([[8.1, 2.1]]))
+
+    assert second_summary.confirmed_births == []
+    assert len(tracker.birth_model.atoms) == 0
+    assert tracker.tracks[0].pending_birth_learning
+
+
 def test_dp_clutter_model_can_suppress_birth_and_learn_hotspot() -> None:
     clutter_model = make_hotspot_clutter_model()
     tracker = make_tracker(clutter_model=clutter_model)
@@ -122,9 +159,15 @@ def test_min_clutter_responsibility_gate_can_skip_learning() -> None:
     assert summary.clutter_updates[0][1] == 0.0
 
 
-def test_clutter_learning_configuration_validates_probabilities() -> None:
+def test_learning_configuration_validates_probabilities() -> None:
     with pytest.raises(ValueError, match="clutter_responsibility_learning_rate"):
         make_tracker(clutter_responsibility_learning_rate=1.5)
 
     with pytest.raises(ValueError, match="min_clutter_responsibility_to_learn"):
         make_tracker(min_clutter_responsibility_to_learn=-0.1)
+
+    with pytest.raises(ValueError, match="birth_confirmation_age"):
+        make_tracker(birth_confirmation_age=-1)
+
+    with pytest.raises(ValueError, match="birth_confirmation_existence"):
+        make_tracker(birth_confirmation_existence=1.5)
