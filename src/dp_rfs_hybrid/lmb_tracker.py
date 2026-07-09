@@ -20,6 +20,7 @@ class Track:
     existence: float
     age: int = 0
     missed: int = 0
+    pending_birth_learning: bool = False
 
 
 @dataclass(frozen=True)
@@ -29,6 +30,7 @@ class StepSummary:
     clutter: list[int]
     missed_tracks: list[int]
     clutter_updates: list[tuple[int, float]] = field(default_factory=list)
+    confirmed_births: list[int] = field(default_factory=list)
 
 
 @dataclass
@@ -56,6 +58,9 @@ class LabeledMultiBernoulliTracker:
     max_tracks: int = 64
     clutter_responsibility_learning_rate: float = 1.0
     min_clutter_responsibility_to_learn: float = 0.0
+    delayed_birth_learning: bool = False
+    birth_confirmation_age: int = 2
+    birth_confirmation_existence: float = 0.7
     tracks: list[Track] = field(default_factory=list)
     next_label: int = 1
 
@@ -72,6 +77,10 @@ class LabeledMultiBernoulliTracker:
             raise ValueError("clutter_responsibility_learning_rate must be in [0, 1]")
         if not 0.0 <= self.min_clutter_responsibility_to_learn <= 1.0:
             raise ValueError("min_clutter_responsibility_to_learn must be in [0, 1]")
+        if self.birth_confirmation_age < 0:
+            raise ValueError("birth_confirmation_age must be nonnegative")
+        if not 0.0 <= self.birth_confirmation_existence <= 1.0:
+            raise ValueError("birth_confirmation_existence must be in [0, 1]")
 
     def predict(self) -> None:
         for track in self.tracks:
@@ -130,10 +139,7 @@ class LabeledMultiBernoulliTracker:
             if measurement_index in assigned_measurement_indices:
                 continue
             clutter_intensity = self._clutter_intensity(measurement)
-            decision = self.birth_model.process(
-                measurement,
-                clutter_intensity=clutter_intensity,
-            )
+            decision = self._process_birth_measurement(measurement, clutter_intensity)
             clutter_responsibility = self._clutter_responsibility_from_birth_odds(decision.odds)
             clutter_evidence.append((measurement_index, measurement, clutter_responsibility))
             if decision.accepted and decision.state is not None:
@@ -145,11 +151,13 @@ class LabeledMultiBernoulliTracker:
                         label=label,
                         state=decision.state,
                         existence=self.birth_model.birth_probability,
+                        pending_birth_learning=self.delayed_birth_learning,
                     )
                 )
             else:
                 clutter.append(measurement_index)
 
+        confirmed_births = self._confirm_pending_births()
         clutter_updates = self._update_clutter_model(clutter_evidence)
         assignment_labels = [
             (self.tracks[track_index].label, measurement_index)
@@ -165,10 +173,51 @@ class LabeledMultiBernoulliTracker:
             clutter=clutter,
             missed_tracks=missed_tracks,
             clutter_updates=clutter_updates,
+            confirmed_births=confirmed_births,
         )
 
     def estimates(self, existence_threshold: float = 0.5) -> list[Track]:
         return [track for track in self.tracks if track.existence >= existence_threshold]
+
+    def _process_birth_measurement(
+        self,
+        measurement: np.ndarray,
+        clutter_intensity: float,
+    ):
+        if not self.delayed_birth_learning:
+            return self.birth_model.process(
+                measurement,
+                clutter_intensity=clutter_intensity,
+            )
+        decision = self.birth_model.decide(
+            measurement,
+            clutter_intensity=clutter_intensity,
+        )
+        state = self.birth_model.birth_state_from_decision(measurement, decision)
+        return type(decision)(
+            accepted=decision.accepted,
+            branch=decision.branch,
+            odds=decision.odds,
+            atom_index=decision.atom_index,
+            state=state,
+            clutter_intensity=decision.clutter_intensity,
+        )
+
+    def _confirm_pending_births(self) -> list[int]:
+        confirmed: list[int] = []
+        if not self.delayed_birth_learning:
+            return confirmed
+        for track in self.tracks:
+            if not track.pending_birth_learning:
+                continue
+            if track.age < self.birth_confirmation_age:
+                continue
+            if track.existence < self.birth_confirmation_existence:
+                continue
+            self.birth_model.learn_confirmed_state(track.state)
+            track.pending_birth_learning = False
+            confirmed.append(track.label)
+        return confirmed
 
     def _greedy_assign(self, measurements: np.ndarray) -> list[tuple[int, int]]:
         candidates: list[tuple[float, int, int]] = []
