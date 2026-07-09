@@ -30,6 +30,8 @@ where `DirichletProcessClutterModel` estimates `c(z)` and stores `lambda_C` as `
 
 The tracker can optionally consume a clutter model: association odds, Bernoulli existence updates, and birth decisions use `clutter_model.intensity(z)` instead of a fixed scalar clutter intensity. The tracker then feeds fractional clutter responsibilities back into adaptive clutter models. Responsibility learning can be attenuated or gated via `clutter_responsibility_learning_rate` and `min_clutter_responsibility_to_learn`.
 
+Birth learning can also run on two time scales. With `delayed_birth_learning=True`, an accepted birth measurement still spawns a tentative Bernoulli track immediately, but the DP birth atoms are updated only after that track reaches `birth_confirmation_age` and `birth_confirmation_existence`.
+
 ## Install
 
 ```bash
