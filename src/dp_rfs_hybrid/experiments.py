@@ -7,9 +7,17 @@ from dataclasses import dataclass
 import numpy as np
 
 from .dp_birth import DirichletProcessBirthModel
-from .dp_clutter import DirichletProcessClutterModel
+from .dp_clutter import DirichletProcessClutterModel, FixedGaussianMixtureClutterModel
 from .gaussian import GaussianState
 from .lmb_tracker import LabeledMultiBernoulliTracker
+
+STRUCTURED_CLUTTER_HOTSPOT = np.array([10.0, 5.0])
+STRUCTURED_CLUTTER_TRUE_BIRTH = np.array([-16.0, -5.0])
+STRUCTURED_CLUTTER_TRACKER_KINDS = (
+    "fixed_scalar_clutter",
+    "fixed_gmm_clutter",
+    "adaptive_dp_clutter",
+)
 
 
 @dataclass(frozen=True)
@@ -54,8 +62,11 @@ class StructuredClutterExperimentResult:
         ]
 
 
-def make_structured_clutter_tracker(use_adaptive_clutter: bool) -> LabeledMultiBernoulliTracker:
-    """Create the tracker used by the structured-clutter experiment."""
+def make_structured_clutter_tracker_by_kind(kind: str) -> LabeledMultiBernoulliTracker:
+    """Create a structured-clutter tracker by named clutter model kind.
+
+    Valid kinds are listed in :data:`STRUCTURED_CLUTTER_TRACKER_KINDS`.
+    """
 
     dt = 1.0
     transition = np.array(
@@ -89,15 +100,25 @@ def make_structured_clutter_tracker(use_adaptive_clutter: bool) -> LabeledMultiB
         max_atoms=12,
     )
     clutter_model = None
-    if use_adaptive_clutter:
+    if kind == "adaptive_dp_clutter":
         clutter_model = DirichletProcessClutterModel(
             alpha=1.0,
-            base_mean=np.array([10.0, 5.0]),
+            base_mean=STRUCTURED_CLUTTER_HOTSPOT.copy(),
             base_covariance=np.diag([9.0, 9.0]),
             rate=8.0,
             prune_below_count=0.02,
             max_atoms=8,
         )
+    elif kind == "fixed_gmm_clutter":
+        clutter_model = FixedGaussianMixtureClutterModel(
+            weights=np.array([1.0]),
+            means=np.array([STRUCTURED_CLUTTER_HOTSPOT.copy()]),
+            covariances=np.array([np.diag([1.5, 1.5])]),
+            rate=8.0,
+        )
+    elif kind != "fixed_scalar_clutter":
+        raise ValueError(f"Unknown structured clutter tracker kind: {kind}")
+
     return LabeledMultiBernoulliTracker(
         transition_matrix=transition,
         process_noise=process_noise,
@@ -107,7 +128,18 @@ def make_structured_clutter_tracker(use_adaptive_clutter: bool) -> LabeledMultiB
         clutter_model=clutter_model,
         association_threshold=8.0,
         prune_below_existence=0.05,
+        min_clutter_responsibility_to_learn=0.05,
     )
+
+
+def make_structured_clutter_tracker(use_adaptive_clutter: bool) -> LabeledMultiBernoulliTracker:
+    """Create the legacy fixed-scalar or adaptive-DP tracker.
+
+    Prefer :func:`make_structured_clutter_tracker_by_kind` for new experiments.
+    """
+
+    kind = "adaptive_dp_clutter" if use_adaptive_clutter else "fixed_scalar_clutter"
+    return make_structured_clutter_tracker_by_kind(kind)
 
 
 def simulate_structured_clutter_measurements(
@@ -120,10 +152,10 @@ def simulate_structured_clutter_measurements(
 
     hotspot_count = max(1, int(rng.poisson(3)))
     for _ in range(hotspot_count):
-        measurements.append(np.array([10.0, 5.0]) + rng.normal(scale=0.7, size=2))
+        measurements.append(STRUCTURED_CLUTTER_HOTSPOT + rng.normal(scale=0.7, size=2))
 
     if scan in {0, 1, 2, 10, 11, 12}:
-        measurements.append(np.array([-16.0, -5.0]) + rng.normal(scale=0.6, size=2))
+        measurements.append(STRUCTURED_CLUTTER_TRUE_BIRTH + rng.normal(scale=0.6, size=2))
 
     for _ in range(int(rng.poisson(1))):
         measurements.append(rng.uniform(low=[-30.0, -20.0], high=[30.0, 20.0]))
@@ -139,8 +171,8 @@ def run_structured_clutter_experiment(
     """Run a fixed-clutter versus adaptive-DP-clutter comparison."""
 
     rng = np.random.default_rng(seed)
-    fixed = make_structured_clutter_tracker(use_adaptive_clutter=False)
-    adaptive = make_structured_clutter_tracker(use_adaptive_clutter=True)
+    fixed = make_structured_clutter_tracker_by_kind("fixed_scalar_clutter")
+    adaptive = make_structured_clutter_tracker_by_kind("adaptive_dp_clutter")
     records: list[StructuredClutterScanRecord] = []
     fixed_total_births = 0
     adaptive_total_births = 0
