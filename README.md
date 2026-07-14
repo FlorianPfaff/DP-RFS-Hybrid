@@ -88,6 +88,22 @@ python experiments/plot_structured_clutter_metrics.py --input results/structured
 
 The most paper-relevant first plot is `structured_clutter_hotspot_track_steps.pdf`, which summarizes false-track pressure near the persistent clutter hotspot.
 
+Run the recurring-birth benchmark used for delayed-learning ablations:
+
+```bash
+python experiments/recurring_birth_metrics.py \
+  --seeds 100 --scans 96 \
+  --output results/recurring_birth_metrics_seed100.csv
+```
+
+This paired benchmark compares a fixed broad birth model, measurement-driven
+birth (MDB), immediate DP learning, delayed learning without reclustering,
+delayed DP learning with reclustering, and an oracle birth mixture. It reports
+GOSPA with localization/missed/false decomposition and birth-region recovery
+diagnostics. Seeds 0--19 select the DP concentration; headline comparisons use
+the held-out seeds 20--99. See `docs/recurring_birth_benchmark.md` for the
+recurrence ablation and official PMBM reference workflow.
+
 ## Reusable Experiment API
 
 The structured-clutter demo is backed by a reusable experiment helper:
@@ -126,6 +142,8 @@ tests/
 - Gaussian birth/clutter atoms and linear-Gaussian tracking only.
 - Heuristic birth-vs-clutter odds threshold.
 - DP clutter feedback is still approximate and single-scan; it does not yet use smoothing or a full multi-hypothesis responsibility calculation.
-- Confirmed birth evidence currently appends a new birth atom; it does not yet recluster confirmed evidence against existing atoms.
+- The experiment tracker still uses greedy association; PMBM is evaluated as a
+  separate reference implementation rather than being integrated as the main
+  backend.
 
 Those restrictions are intentional for the first artifact: the goal is to isolate whether adaptive nonparametric nuisance structure helps before adding a larger RFS backend.

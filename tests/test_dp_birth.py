@@ -125,3 +125,21 @@ def test_distant_confirmed_births_create_separate_atoms() -> None:
     assert second_atom == 1
     assert len(model.atoms) == 2
     assert [atom.count for atom in model.atoms] == pytest.approx([1.0, 1.0])
+
+
+def test_confirmed_birth_reclustering_can_be_disabled_for_ablation() -> None:
+    model = make_birth_model()
+    model.recluster_confirmed_states = False
+    first_state = GaussianState(
+        mean=np.array([8.0, 2.0, 0.0, 0.0]),
+        covariance=np.diag([0.25, 0.25, 1.0, 1.0]),
+    )
+    second_state = GaussianState(
+        mean=np.array([8.2, 2.2, 0.0, 0.0]),
+        covariance=np.diag([0.25, 0.25, 1.0, 1.0]),
+    )
+
+    model.learn_confirmed_state(first_state)
+    model.learn_confirmed_state(second_state)
+
+    assert len(model.atoms) == 2

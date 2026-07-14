@@ -6,11 +6,20 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
+from .birth_baselines import (
+    FixedGaussianMixtureBirthModel,
+    MeasurementDrivenBirthModel,
+)
 from .dp_birth import DirichletProcessBirthModel
 from .dp_clutter import DirichletProcessClutterModel, FixedGaussianMixtureClutterModel
 from .gaussian import GaussianState
 
 ClutterModel = DirichletProcessClutterModel | FixedGaussianMixtureClutterModel
+BirthModel = (
+    DirichletProcessBirthModel
+    | FixedGaussianMixtureBirthModel
+    | MeasurementDrivenBirthModel
+)
 
 
 @dataclass
@@ -49,7 +58,7 @@ class LabeledMultiBernoulliTracker:
     process_noise: np.ndarray
     measurement_matrix: np.ndarray
     measurement_noise: np.ndarray
-    birth_model: DirichletProcessBirthModel
+    birth_model: BirthModel
     clutter_model: ClutterModel | None = None
     survival_probability: float = 0.98
     detection_probability: float = 0.9
@@ -135,9 +144,16 @@ class LabeledMultiBernoulliTracker:
 
         births: list[int] = []
         clutter: list[int] = []
-        for measurement_index, measurement in enumerate(measurement_array):
-            if measurement_index in assigned_measurement_indices:
-                continue
+        birth_candidate_indices = [
+            measurement_index
+            for measurement_index in range(len(measurement_array))
+            if measurement_index not in assigned_measurement_indices
+        ]
+        begin_birth_batch = getattr(self.birth_model, "begin_birth_batch", None)
+        if begin_birth_batch is not None:
+            begin_birth_batch(len(birth_candidate_indices))
+        for measurement_index in birth_candidate_indices:
+            measurement = measurement_array[measurement_index]
             clutter_intensity = self._clutter_intensity(measurement)
             decision = self._process_birth_measurement(measurement, clutter_intensity)
             clutter_responsibility = self._clutter_responsibility_from_birth_odds(decision.odds)
@@ -146,11 +162,14 @@ class LabeledMultiBernoulliTracker:
                 label = self.next_label
                 self.next_label += 1
                 births.append(label)
+                existence_probability = decision.existence_probability
+                if existence_probability is None:
+                    existence_probability = self.birth_model.birth_probability
                 self.tracks.append(
                     Track(
                         label=label,
                         state=decision.state,
-                        existence=self.birth_model.birth_probability,
+                        existence=existence_probability,
                         pending_birth_learning=self.delayed_birth_learning,
                     )
                 )
@@ -203,6 +222,7 @@ class LabeledMultiBernoulliTracker:
             clutter_intensity=decision.clutter_intensity,
             birth_density=decision.birth_density,
             birth_intensity=decision.birth_intensity,
+            existence_probability=decision.existence_probability,
         )
 
     def _confirm_pending_births(self) -> list[int]:

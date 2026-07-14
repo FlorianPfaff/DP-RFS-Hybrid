@@ -30,6 +30,7 @@ class BirthDecision:
     clutter_intensity: float | None = None
     birth_density: float | None = None
     birth_intensity: float | None = None
+    existence_probability: float | None = None
 
 
 @dataclass
@@ -61,6 +62,7 @@ class DirichletProcessBirthModel:
     birth_rate: float | None = None
     max_atoms: int = 16
     prune_below_count: float = 0.05
+    recluster_confirmed_states: bool = True
     atoms: list[BirthAtom] = field(default_factory=list)
     scan_index: int = 0
 
@@ -164,6 +166,7 @@ class DirichletProcessBirthModel:
             clutter_intensity=resolved_clutter_intensity,
             birth_density=birth_density,
             birth_intensity=birth_intensity,
+            existence_probability=self.birth_probability,
         )
 
     def birth_state_from_decision(
@@ -214,7 +217,11 @@ class DirichletProcessBirthModel:
 
         existing_scores = self.score_existing_confirmed_states(state)
         new_score = self.score_new_confirmed_state(state)
-        if existing_scores and max(existing_scores) >= new_score:
+        if (
+            self.recluster_confirmed_states
+            and existing_scores
+            and max(existing_scores) >= new_score
+        ):
             atom_index = int(np.argmax(existing_scores))
             atom = self.atoms[atom_index]
             atom.state = self._merge_gaussian_states(
@@ -306,6 +313,7 @@ class DirichletProcessBirthModel:
             clutter_intensity=decision.clutter_intensity,
             birth_density=decision.birth_density,
             birth_intensity=decision.birth_intensity,
+            existence_probability=decision.existence_probability,
         )
 
     def decay_counts(self, retention: float = 0.995) -> None:
