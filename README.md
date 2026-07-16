@@ -33,6 +33,11 @@ The tracker can optionally consume a clutter model: association odds, Bernoulli 
 
 Birth learning can also run on two time scales. With `delayed_birth_learning=True`, an accepted birth measurement still spawns a tentative Bernoulli track immediately, but the DP birth atoms are updated only after that track reaches `birth_confirmation_age` and `birth_confirmation_existence`.
 
+Confirmed Gaussian states are scored against both occupied atoms and the DP
+residual branch. A nearby occupied winner is updated by count-weighted moment
+matching; a residual winner creates a new atom. This keeps repeated confirmed
+births from producing an append-only list of components.
+
 ## Install
 
 ```bash
@@ -92,17 +97,23 @@ Run the recurring-birth benchmark used for delayed-learning ablations:
 
 ```bash
 python experiments/recurring_birth_metrics.py \
-  --seeds 100 --scans 96 \
-  --output results/recurring_birth_metrics_seed100.csv
+  --seed-start 100 --seeds 100 --scans 96 \
+  --output results/recurring_birth_metrics_seed100_199.csv
 ```
 
 This paired benchmark compares a fixed broad birth model, measurement-driven
 birth (MDB), immediate DP learning, delayed learning without reclustering,
 delayed DP learning with reclustering, and an oracle birth mixture. It reports
 GOSPA with localization/missed/false decomposition and birth-region recovery
-diagnostics. Seeds 0--19 select the DP concentration; headline comparisons use
-the held-out seeds 20--99. See `docs/recurring_birth_benchmark.md` for the
-recurrence ablation and official PMBM reference workflow.
+diagnostics. Seeds 0--99 are the development campaign that fixed the method and
+selected the DP concentration. Headline comparisons use the fresh, locked seeds
+100--199. See `docs/recurring_birth_benchmark.md` for the recurrence ablation
+and official PMBM reference workflow.
+
+On the locked campaign, delayed DP learning with confirmed-state reclustering
+scores `4.493 +/- 0.068 m` RMS GOSPA, compared with `4.841 +/- 0.050 m` for MDB
+and `5.009 +/- 0.051 m` for fixed broad birth. Raw locked CSVs, paired analyses,
+run provenance, and paper-ready figures are under `results/`.
 
 ## Reusable Experiment API
 

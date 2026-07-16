@@ -36,19 +36,20 @@ separately. Pairwise claims use paired seeds, a 20,000-resample bootstrap
 confidence interval for the mean GOSPA difference, and a 50,000-sample
 sign-flip test.
 
-The first 20 paired seeds form a development set. They select `alpha=10` from
-`alpha in {1, 2, 5, 10, 20}`. Headline comparisons use the held-out 80 seeds
-20--99. The full sensitivity sweep is retained alongside the primary results;
-the residual branch is underweighted at the two smallest values, while
-performance is stable around the selected value.
+Seeds 0--99 form the development set. They select `alpha=10` from `alpha in
+{1, 2, 5, 10, 20}` and fix all remaining method and scenario settings. The
+headline comparison is a locked evaluation on fresh seeds 100--199. The full
+development sensitivity sweep is retained alongside the primary results; the
+residual branch is underweighted at the two smallest values, while performance
+is stable around the selected value.
 
 ## Native Run
 
 ```bash
 python -m pip install -e ".[test,benchmark]"
 python experiments/recurring_birth_metrics.py \
-  --seeds 100 --scans 96 \
-  --output results/recurring_birth_metrics_seed100.csv
+  --seed-start 100 --seeds 100 --scans 96 \
+  --output results/recurring_birth_metrics_seed100_199.csv
 ```
 
 ## Official PMBM Run
@@ -64,31 +65,46 @@ On a machine with Apptainer, clone those repositories to `~/MTT-reference` and
 `~/TCL-reference`, then run:
 
 ```bash
-experiments/run_official_pmbm_campaign.sh 100 10
+experiments/run_official_pmbm_campaign.sh 100 10 100
 ```
 
-The second argument is the number of paired seeds per parallel Octave worker.
+The second argument is the number of paired seeds per parallel Octave worker,
+and the third is the first seed (zero by default for backward compatibility).
 The runner exports identical Python-generated scenarios to MAT files, runs the
 official Gaussian PMBM update/prediction/pruning code, and merges all rows into
-`results/recurring_birth_pmbm_seed100.csv`.
+`results/recurring_birth_pmbm_seed100_199.csv`.
 
 ## Analysis and Figures
 
 ```bash
 python experiments/analyze_recurring_birth_results.py \
-  --input results/recurring_birth_metrics_seed100.csv \
-          results/recurring_birth_pmbm_seed100.csv \
-  --seed-start 20
+  --input results/recurring_birth_metrics_seed100_199.csv \
+          results/recurring_birth_pmbm_seed100_199.csv \
+  --output results/recurring_birth_locked_paired_comparisons.csv \
+  --markdown results/recurring_birth_locked_paired_comparisons.md
 
 python experiments/plot_recurring_birth_metrics.py \
-  --input results/recurring_birth_metrics_seed100.csv \
-          results/recurring_birth_pmbm_seed100.csv \
-  --seed-start 20
+  --input results/recurring_birth_metrics_seed100_199.csv \
+          results/recurring_birth_pmbm_seed100_199.csv \
+  --output-dir results/figures_locked \
+  --summary results/recurring_birth_locked_summary.csv
 
-python experiments/recurring_birth_recurrence_ablation.py
+python experiments/recurring_birth_recurrence_ablation.py \
+  --seed-start 100 --seeds 100 \
+  --output results/recurring_birth_recurrence_ablation_seed100_199.csv
+python experiments/analyze_recurring_birth_recurrence.py \
+  --input results/recurring_birth_recurrence_ablation_seed100_199.csv \
+  --output results/recurring_birth_locked_recurrence_comparisons.csv \
+  --markdown results/recurring_birth_locked_recurrence_comparisons.md
 python experiments/plot_recurring_birth_recurrence.py \
-  --input results/recurring_birth_recurrence_ablation_seed80.csv
+  --input results/recurring_birth_recurrence_ablation_seed100_199.csv \
+  --output results/figures_locked/recurring_birth_recurrence.pdf
 ```
+
+The locked raw files contain 600 native rows, 200 PMBM rows, and 1,200
+recurrence rows. Each method cell contains exactly the 100 seeds 100--199.
+`results/recurring_birth_locked_run_metadata.md` records the environments,
+reference revisions, protocol, and SHA-256 checksums.
 
 ## References
 
