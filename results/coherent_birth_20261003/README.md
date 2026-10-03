@@ -22,3 +22,19 @@ benchmark or historical result was overwritten.
 
 Status: development replay running; held-out data not yet opened. The frozen
 configuration manifest and final records will be added incrementally.
+
+## Scheduling provenance
+
+The initial 32-worker replay pool on gpuserver6000 was deliberately stopped to
+split the same campaign into disjoint seed blocks: 0-19 on gpuserver6000 and
+20-49 on gpuserver4090. Completed JSON records were retained and skipped on
+restart. Interrupted in-flight trials were restarted from their original RNG
+seeds; no completed outcome was selected or discarded. The initial pool reports
+`BrokenProcessPool` because its workers were explicitly terminated for this
+scheduling change, not because a numerical method failed. The original stage
+manifest is preserved as `replay-initial-manifest.json`.
+
+The shard scheduler was added in `c6997db`; it invokes the unchanged trial
+function from `b688b3c`. The two disjoint record sets are merged before any
+shortlisting. Source hashes distinguish this scheduling-only addition from
+the initial execution bundle.
