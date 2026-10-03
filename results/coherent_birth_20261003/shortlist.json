@@ -1,0 +1,36 @@
+{
+  "dp": [
+    {
+      "learner": "dp",
+      "alpha": 5
+    },
+    {
+      "learner": "dp",
+      "alpha": 2
+    }
+  ],
+  "finite": [
+    {
+      "learner": "finite",
+      "alpha": 1,
+      "components": 16
+    },
+    {
+      "learner": "finite",
+      "alpha": 0.5,
+      "components": 16
+    }
+  ],
+  "kde": [
+    {
+      "learner": "kde",
+      "bandwidth": 1.0,
+      "residual": 0.2
+    },
+    {
+      "learner": "kde",
+      "bandwidth": 1.0,
+      "residual": 0.5
+    }
+  ]
+}

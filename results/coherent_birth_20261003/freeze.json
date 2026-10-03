@@ -1,0 +1,40 @@
+{
+  "selected": {
+    "dp": {
+      "learner": "dp",
+      "alpha": 5
+    },
+    "finite": {
+      "learner": "finite",
+      "alpha": 1,
+      "components": 16
+    },
+    "kde": {
+      "learner": "kde",
+      "bandwidth": 1.0,
+      "residual": 0.5
+    }
+  },
+  "comparator": "kde",
+  "development_gospa": {
+    "dp": 5.646102303056558,
+    "finite": 7.19086045638226,
+    "kde": 5.193217994585169
+  },
+  "source_hash": "87afb2327dc416c41fccc2b93d3f88450238c5626c9ce5ea2aa99d18aa89d726",
+  "created_unix": 1791054962.5767796,
+  "heldout_seeds": [
+    200,
+    299
+  ],
+  "reserved_seeds": [
+    300,
+    399
+  ],
+  "implementation_commit": "f078866357c63d46bfb6b58704dad514f3f8262c",
+  "paper_commit": "63cfaaa78dd0728296bea8a9aac29b963456333b",
+  "ci_url": "https://github.com/FlorianPfaff/DP-RFS-Hybrid/actions/runs/37144283710",
+  "validation_sha256": "602f6fe4244c6a50fc0ad8024bda3bcac54967c84a736cfa151e74c6f77fa5d6",
+  "locked_unix": 1791055069.252099,
+  "instruction": "Commit this file before running heldout; never retune from heldout."
+}

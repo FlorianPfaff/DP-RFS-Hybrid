@@ -20,8 +20,20 @@ high-clutter tracks. Its records are preserved separately. The threshold was
 repaired for every learner before the single development campaign. No old
 benchmark or historical result was overwritten.
 
-Status: development replay running; held-out data not yet opened. The frozen
-configuration manifest and final records will be added incrementally.
+Status: all 18,900 development replay and 1,800 closed-loop development trials
+completed without numerical failures. Held-out data have not been opened at
+the time of this freeze commit. `freeze.json` locks the source/analysis hash,
+selected configurations, comparator, correctness artifact, and protocol commit.
+
+Selected DP: alpha 5. Selected finite mixture: K=16, alpha 1. Selected KDE:
+positional bandwidth 1, velocity bandwidth 0.1, residual 0.5. The development
+GOSPA means over all six conditions are 5.64610, 7.19086, and 5.19322 respectively;
+KDE is therefore the locked simple comparator. These are development numbers,
+not validation claims.
+
+`development-replay.tar.gz` and `development-closed.tar.gz` preserve every raw
+development record and the corresponding manifests before held-out evaluation.
+The former also includes common raw histories and both pilot versions.
 
 ## Scheduling provenance
 

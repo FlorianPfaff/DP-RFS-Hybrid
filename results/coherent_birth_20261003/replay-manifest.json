@@ -1,0 +1,334 @@
+{
+  "stage": "replay",
+  "source_hash": "87afb2327dc416c41fccc2b93d3f88450238c5626c9ce5ea2aa99d18aa89d726",
+  "seed_range": [
+    0,
+    50
+  ],
+  "configurations": [
+    {
+      "learner": "dp",
+      "alpha": 0.5
+    },
+    {
+      "learner": "dp",
+      "alpha": 1
+    },
+    {
+      "learner": "dp",
+      "alpha": 2
+    },
+    {
+      "learner": "dp",
+      "alpha": 5
+    },
+    {
+      "learner": "dp",
+      "alpha": 10
+    },
+    {
+      "learner": "dp",
+      "alpha": 20
+    },
+    {
+      "learner": "dp",
+      "alpha": 50
+    },
+    {
+      "learner": "dp",
+      "alpha": 100
+    },
+    {
+      "learner": "dp",
+      "alpha": 200
+    },
+    {
+      "learner": "finite",
+      "alpha": 0.5,
+      "components": 1
+    },
+    {
+      "learner": "finite",
+      "alpha": 0.5,
+      "components": 2
+    },
+    {
+      "learner": "finite",
+      "alpha": 0.5,
+      "components": 4
+    },
+    {
+      "learner": "finite",
+      "alpha": 0.5,
+      "components": 8
+    },
+    {
+      "learner": "finite",
+      "alpha": 0.5,
+      "components": 16
+    },
+    {
+      "learner": "finite",
+      "alpha": 1,
+      "components": 1
+    },
+    {
+      "learner": "finite",
+      "alpha": 1,
+      "components": 2
+    },
+    {
+      "learner": "finite",
+      "alpha": 1,
+      "components": 4
+    },
+    {
+      "learner": "finite",
+      "alpha": 1,
+      "components": 8
+    },
+    {
+      "learner": "finite",
+      "alpha": 1,
+      "components": 16
+    },
+    {
+      "learner": "finite",
+      "alpha": 2,
+      "components": 1
+    },
+    {
+      "learner": "finite",
+      "alpha": 2,
+      "components": 2
+    },
+    {
+      "learner": "finite",
+      "alpha": 2,
+      "components": 4
+    },
+    {
+      "learner": "finite",
+      "alpha": 2,
+      "components": 8
+    },
+    {
+      "learner": "finite",
+      "alpha": 2,
+      "components": 16
+    },
+    {
+      "learner": "finite",
+      "alpha": 5,
+      "components": 1
+    },
+    {
+      "learner": "finite",
+      "alpha": 5,
+      "components": 2
+    },
+    {
+      "learner": "finite",
+      "alpha": 5,
+      "components": 4
+    },
+    {
+      "learner": "finite",
+      "alpha": 5,
+      "components": 8
+    },
+    {
+      "learner": "finite",
+      "alpha": 5,
+      "components": 16
+    },
+    {
+      "learner": "finite",
+      "alpha": 10,
+      "components": 1
+    },
+    {
+      "learner": "finite",
+      "alpha": 10,
+      "components": 2
+    },
+    {
+      "learner": "finite",
+      "alpha": 10,
+      "components": 4
+    },
+    {
+      "learner": "finite",
+      "alpha": 10,
+      "components": 8
+    },
+    {
+      "learner": "finite",
+      "alpha": 10,
+      "components": 16
+    },
+    {
+      "learner": "finite",
+      "alpha": 20,
+      "components": 1
+    },
+    {
+      "learner": "finite",
+      "alpha": 20,
+      "components": 2
+    },
+    {
+      "learner": "finite",
+      "alpha": 20,
+      "components": 4
+    },
+    {
+      "learner": "finite",
+      "alpha": 20,
+      "components": 8
+    },
+    {
+      "learner": "finite",
+      "alpha": 20,
+      "components": 16
+    },
+    {
+      "learner": "finite",
+      "alpha": 50,
+      "components": 1
+    },
+    {
+      "learner": "finite",
+      "alpha": 50,
+      "components": 2
+    },
+    {
+      "learner": "finite",
+      "alpha": 50,
+      "components": 4
+    },
+    {
+      "learner": "finite",
+      "alpha": 50,
+      "components": 8
+    },
+    {
+      "learner": "finite",
+      "alpha": 50,
+      "components": 16
+    },
+    {
+      "learner": "finite",
+      "alpha": 100,
+      "components": 1
+    },
+    {
+      "learner": "finite",
+      "alpha": 100,
+      "components": 2
+    },
+    {
+      "learner": "finite",
+      "alpha": 100,
+      "components": 4
+    },
+    {
+      "learner": "finite",
+      "alpha": 100,
+      "components": 8
+    },
+    {
+      "learner": "finite",
+      "alpha": 100,
+      "components": 16
+    },
+    {
+      "learner": "finite",
+      "alpha": 200,
+      "components": 1
+    },
+    {
+      "learner": "finite",
+      "alpha": 200,
+      "components": 2
+    },
+    {
+      "learner": "finite",
+      "alpha": 200,
+      "components": 4
+    },
+    {
+      "learner": "finite",
+      "alpha": 200,
+      "components": 8
+    },
+    {
+      "learner": "finite",
+      "alpha": 200,
+      "components": 16
+    },
+    {
+      "learner": "kde",
+      "bandwidth": 0.5,
+      "residual": 0.05
+    },
+    {
+      "learner": "kde",
+      "bandwidth": 0.5,
+      "residual": 0.2
+    },
+    {
+      "learner": "kde",
+      "bandwidth": 0.5,
+      "residual": 0.5
+    },
+    {
+      "learner": "kde",
+      "bandwidth": 1.0,
+      "residual": 0.05
+    },
+    {
+      "learner": "kde",
+      "bandwidth": 1.0,
+      "residual": 0.2
+    },
+    {
+      "learner": "kde",
+      "bandwidth": 1.0,
+      "residual": 0.5
+    },
+    {
+      "learner": "kde",
+      "bandwidth": 2.0,
+      "residual": 0.05
+    },
+    {
+      "learner": "kde",
+      "bandwidth": 2.0,
+      "residual": 0.2
+    },
+    {
+      "learner": "kde",
+      "bandwidth": 2.0,
+      "residual": 0.5
+    }
+  ],
+  "conditions": [
+    "stationary2",
+    "stationary4",
+    "stationary8",
+    "nonrecurring",
+    "high_clutter",
+    "drift"
+  ],
+  "modes": [
+    "replay"
+  ],
+  "host": "workstation2",
+  "python": "3.12.3",
+  "numpy": "2.0.2",
+  "workers": 32,
+  "pid": 217853,
+  "start_unix": 1791054818.8164163,
+  "pending": 0
+}
