@@ -59,7 +59,7 @@ def main():
         all_configs.update({name: dict(selected["dp"], ablation=name) for name in ["prior_feedback", "confirmation_time"]})
         table = {}
         metrics = ["gospa", "log_loss", "missed", "false", "confirmation_delay", "unconfirmed_targets",
-                   "fragmentation", "birth_time_error", "model_size", "runtime", "admitted", "initiations"]
+                   "fragmentation", "birth_time_error", "model_size", "predictive_terms", "runtime", "admitted", "initiations"]
         for name, config in all_configs.items():
             table[name] = {}
             for condition in CONDITIONS:

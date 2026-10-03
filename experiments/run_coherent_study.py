@@ -43,6 +43,7 @@ def job(arguments):
                 temporary.write_text(json.dumps(payload, allow_nan=False)+"\n")
                 temporary.replace(history_path)
         result = run_trial(seed, condition, config, mode, particles, algorithm_seed)
+        json.dumps(result, allow_nan=False)
     except Exception:
         result = {"seed": seed, "condition": condition, "config": config, "mode": mode,
                   "particles": particles, "algorithm_seed": algorithm_seed,

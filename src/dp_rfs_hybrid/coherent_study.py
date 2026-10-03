@@ -97,12 +97,14 @@ class ReferenceKDE:
     def __init__(self, bandwidth=1., residual=.2, fixed=False):
         self.bandwidth, self.residual, self.fixed = bandwidth, residual, fixed
         self.kernels, self.labels = [], set()
+        self.birth_times = {}
 
     def update(self, raw):
         if raw.label in self.labels:
             raise ValueError("Duplicate evidence label")
         self.labels.add(raw.label)
         means, covariance, mass = raw.posterior(BASE_MEAN, BASE_COV + SPREAD)
+        self.birth_times[raw.label] = float(mass @ np.asarray(raw.birth_scans))
         bandwidth = np.diag([self.bandwidth**2]*2 + [(self.bandwidth/10)**2]*2)
         self.kernels.append(GaussianMixture(mass, means, covariance + bandwidth))
 
@@ -257,8 +259,9 @@ def replay_stream(seed, condition):
 
 
 def run_trial(seed, condition, config, mode="closed", particles=128, algorithm_seed=0):
-    started = time.perf_counter()
+    total_started = time.perf_counter()
     data, stream = replay_stream(seed, condition) if mode == "replay" else (scenario(seed, condition), [])
+    started = time.perf_counter()
     # Separate algorithm randomness, with matching particle random streams for DP/finite.
     random_seed = np.random.SeedSequence([seed, CONDITIONS.index(condition), algorithm_seed, 9981])
     adapter = BirthAdapter(config, data["sensor"], random_seed, particles)
@@ -312,6 +315,8 @@ def run_trial(seed, condition, config, mode="closed", particles=128, algorithm_s
                 index = next(i for i, site in enumerate(adapter.learner.sites) if site.label == history.label)
                 probabilities = adapter.learner.probabilities()[1][index]
                 birth_estimate = float(probabilities @ np.array(adapter.learner.sites[index].birth_scans))
+            else:
+                birth_estimate = adapter.learner.birth_times[history.label]
             history_diagnostics.append({"label": history.label, "first": history.first_detection,
                                          "end": history.end_scan, "target": target, "purity": purity,
                                          "birth_estimate": birth_estimate,
@@ -330,4 +335,6 @@ def run_trial(seed, condition, config, mode="closed", particles=128, algorithm_s
             "birth_time_error": float(np.mean(errors)) if errors else None,
             "model_size": adapter.learner.model_size, "histories": history_diagnostics,
             "admitted": len(history_diagnostics), "initiations": tracker.total_initiations if mode != "replay" else None,
-            "runtime": time.perf_counter()-started, "sensor": asdict(data["sensor"])}
+            "predictive_terms": len(adapter.density.weights),
+            "runtime": time.perf_counter()-started, "total_runtime": time.perf_counter()-total_started,
+            "sensor": asdict(data["sensor"])}
