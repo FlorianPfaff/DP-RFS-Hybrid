@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "study": "dp-specific-feasibility-stage-one",
+  "interpretation": "Deterministic model diagnostics; not tracking benchmarks.",
+  "posterior_feedback": [
+    {
+      "case": "prior_zero_observation_two",
+      "prior_mean": 0.0,
+      "prior_variance": 1.0,
+      "observation": 2.0,
+      "observation_variance": 1.0,
+      "posterior_mean": 1.0,
+      "posterior_variance": 0.5,
+      "overlap_plus_minus_ratio": 14.391916069564266,
+      "likelihood_plus_minus_ratio": 54.5981499239479
+    },
+    {
+      "case": "prior_two_observation_zero",
+      "prior_mean": 2.0,
+      "prior_variance": 1.0,
+      "observation": 0.0,
+      "observation_variance": 1.0,
+      "posterior_mean": 1.0,
+      "posterior_variance": 0.5,
+      "overlap_plus_minus_ratio": 14.391916069564266,
+      "likelihood_plus_minus_ratio": 1.0
+    }
+  ],
+  "no_spatial_information": {
+    "prior_plus_minus_ratio": 1.0,
+    "likelihood_plus_minus_ratio": 1.0,
+    "overlap_plus_minus_ratio": 54.5981499239479
+  },
+  "diffuse_evidence": [
+    {
+      "observation_variance": 1.0,
+      "initial_region_variance": 1.0,
+      "initial_count": 10.0,
+      "selected_atom": 0,
+      "final_atoms": 1,
+      "merged_region_variance": 1.0,
+      "likelihood_variance_two_over_one": 0.8164965809957673
+    },
+    {
+      "observation_variance": 10.0,
+      "initial_region_variance": 1.0,
+      "initial_count": 10.0,
+      "selected_atom": 0,
+      "final_atoms": 1,
+      "merged_region_variance": 1.8181818181818181,
+      "likelihood_variance_two_over_one": 0.9574271077599652
+    },
+    {
+      "observation_variance": 100.0,
+      "initial_region_variance": 1.0,
+      "initial_count": 10.0,
+      "selected_atom": 0,
+      "final_atoms": 1,
+      "merged_region_variance": 10.0,
+      "likelihood_variance_two_over_one": 0.9950859653474509
+    },
+    {
+      "observation_variance": 1000.0,
+      "initial_region_variance": 1.0,
+      "initial_count": 10.0,
+      "selected_atom": 0,
+      "final_atoms": 1,
+      "merged_region_variance": 91.81818181818181,
+      "likelihood_variance_two_over_one": 0.9995008734403311
+    },
+    {
+      "observation_variance": 10000.0,
+      "initial_region_variance": 1.0,
+      "initial_count": 10.0,
+      "selected_atom": 0,
+      "final_atoms": 1,
+      "merged_region_variance": 910.0,
+      "likelihood_variance_two_over_one": 0.999950008748438
+    }
+  ],
+  "positive_controls": {
+    "independent_observation_overlap_ratio": 54.5981499239479,
+    "independent_observation_likelihood_ratio": 54.5981499239479,
+    "diffuse_prior_overlap_ratio": 54.59814840365928,
+    "moment_merge_mean": 1.0,
+    "moment_merge_variance": 4.0
+  },
+  "confirmation_time": {
+    "initial_position": 0.0,
+    "confirmation_position": 2.0,
+    "learned_region_position": 2.0,
+    "confirmed_labels": 1,
+    "elapsed_scans": 1
+  },
+  "provenance": {
+    "source_commit": "d51aa81f95505b7605953cbe0ec17313c2755b00",
+    "commit_verified_locally": false,
+    "hostname": "workstation2",
+    "python": "3.12.3",
+    "numpy": "2.0.2",
+    "source_sha256": {
+      "src/dp_rfs_hybrid/__init__.py": "f4c32498d3cf2b76b919f8d0dcf58ad9bf2efe5b1d82a774b892a96fb3651fa0",
+      "src/dp_rfs_hybrid/birth_baselines.py": "d6f2b681e497d5585e5eceb1b96f04e1361883564e7e253cd1aa722ee9d65444",
+      "src/dp_rfs_hybrid/birth_model_audit.py": "26ef71acc01bd10945440b6edddaaec9c0ac4006448acbcfc388708d4312b574",
+      "src/dp_rfs_hybrid/dp_birth.py": "a0db51ea74f5a0a7eb5e3654512ba270280cd754e8cc01f1fecc4ba7849d8e91",
+      "src/dp_rfs_hybrid/dp_clutter.py": "f4fab663ef9d280e95655237371c4bf6e1ff700ffe8714ffeaa40868e39d7543",
+      "src/dp_rfs_hybrid/experiments.py": "8428a032eadafb0397095cdfe91bda77152f1fca799c9900b45aa16103fede66",
+      "src/dp_rfs_hybrid/gaussian.py": "db90423e6b3fc3ea72147385e0b3ec5f0b7c5f58e82860508a38e51d13eda9d4",
+      "src/dp_rfs_hybrid/lmb_tracker.py": "2a1cd9da88b36450b3b2f8ec6af77dc8ae47fde73186829237ca653b4f039de9",
+      "src/dp_rfs_hybrid/metrics.py": "e47d2bcb337c24f0d67b3c9e9f422eb361161ea3823e910c9447e0158255131d",
+      "src/dp_rfs_hybrid/recurring_birth_benchmark.py": "dc492e24a315ba6dd44dafbe191e0171531e97fdf6b92d26aa2c726dc004704c",
+      "experiments/audit_birth_model.py": "923146bc5ae6020fd499b1fbb89f9761537572e4805ed0b72d9f996d6ace9cfb"
+    }
+  }
+}

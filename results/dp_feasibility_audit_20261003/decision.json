@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "study_date": "2026-10-03",
+  "decision": "no-go",
+  "decision_type": "human_model_audit",
+  "scope": "current DP-specific formulation, not all DP birth-learning methods",
+  "stopping_gate": "stage_one_model_audit",
+  "reasons": [
+    "Prior-conditioned track posteriors are scored as independent likelihoods without retaining the initialization prior.",
+    "Confirmation-time states are learned as birth-time states without temporal alignment.",
+    "The restricted assumptions that could justify these approximations have not been established for the current benchmark."
+  ],
+  "broad_feedback_novelty": "established_prior_art",
+  "narrow_dp_specific_novelty": "unresolved",
+  "diagnostics": "completed",
+  "server_tests": {"passed": 38, "failed": 0},
+  "shared_adapter_and_baselines": "not_implemented_due_to_early_stop",
+  "matched_delay_and_smoothing": "not_implemented_due_to_early_stop",
+  "development_campaign": "not_run",
+  "frozen_campaign": "not_run",
+  "reserved_evaluation_seeds": {"start": 200, "stop_exclusive": 300, "used_by_this_study": false},
+  "comparison_with_simple_learners": "not_evaluated",
+  "source_commit": "d51aa81f95505b7605953cbe0ec17313c2755b00",
+  "ci_url": "https://github.com/FlorianPfaff/DP-RFS-Hybrid/actions/runs/37133969927",
+  "next_step": "A separate approved model and inference redesign before any new comparative campaign."
+}
