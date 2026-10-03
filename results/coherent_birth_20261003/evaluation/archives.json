@@ -1,0 +1,30 @@
+{
+  "pilot-before-admission-fix": {
+    "rows": 36,
+    "sha256": "e880b7707b95ec080f280052b259e93935b3343211c1ec74892a878b4178502d"
+  },
+  "pilot": {
+    "rows": 36,
+    "sha256": "aac08ca40d33d2d89fc1ead245681f02505af365f0f2763b87181fd588cf1b37"
+  },
+  "histories": {
+    "rows": 900,
+    "sha256": "9f093c2f36e31b170f7b189bb5e13d21650c6eda0525e16bae105af5cf5fb5b8"
+  },
+  "replay": {
+    "rows": 18900,
+    "sha256": "4f8731ce2820fc6d8d2cec41e34e60ed0901eda539afd2efa2d044950bfbf10e"
+  },
+  "closed": {
+    "rows": 1800,
+    "sha256": "7085fa44dedfb756cce5d445e28600b713571d04b63b1e4d4855e04505642cfb"
+  },
+  "heldout": {
+    "rows": 6000,
+    "sha256": "1f11c6441fcc177d0b67d4cdfaf45d8e57f28a86801bf406b057640db0789530"
+  },
+  "sensitivity": {
+    "rows": 1080,
+    "sha256": "a15240a40b216590c65acabdb83c9d46d8a2f56d14b96bb499de79511385ef4d"
+  }
+}

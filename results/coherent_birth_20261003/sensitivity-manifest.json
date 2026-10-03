@@ -1,0 +1,35 @@
+{
+  "stage": "sensitivity",
+  "source_hash": "87afb2327dc416c41fccc2b93d3f88450238c5626c9ce5ea2aa99d18aa89d726",
+  "seed_range": [
+    0,
+    10
+  ],
+  "configurations": [
+    {
+      "learner": "dp",
+      "alpha": 5
+    },
+    {
+      "learner": "finite",
+      "alpha": 1,
+      "components": 16
+    }
+  ],
+  "conditions": [
+    "stationary2",
+    "stationary4",
+    "stationary8"
+  ],
+  "modes": [
+    "replay",
+    "closed"
+  ],
+  "host": "workstation2",
+  "python": "3.12.3",
+  "numpy": "2.0.2",
+  "workers": 32,
+  "pid": 221730,
+  "start_unix": 1791055230.862463,
+  "pending": 1080
+}

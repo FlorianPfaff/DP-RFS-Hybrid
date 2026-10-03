@@ -1,0 +1,4312 @@
+{
+  "failures": [],
+  "freeze": {
+    "selected": {
+      "dp": {
+        "learner": "dp",
+        "alpha": 5
+      },
+      "finite": {
+        "learner": "finite",
+        "alpha": 1,
+        "components": 16
+      },
+      "kde": {
+        "learner": "kde",
+        "bandwidth": 1.0,
+        "residual": 0.5
+      }
+    },
+    "comparator": "kde",
+    "development_gospa": {
+      "dp": 5.646102303056558,
+      "finite": 7.19086045638226,
+      "kde": 5.193217994585169
+    },
+    "source_hash": "87afb2327dc416c41fccc2b93d3f88450238c5626c9ce5ea2aa99d18aa89d726",
+    "created_unix": 1791054962.5767796,
+    "heldout_seeds": [
+      200,
+      299
+    ],
+    "reserved_seeds": [
+      300,
+      399
+    ],
+    "implementation_commit": "f078866357c63d46bfb6b58704dad514f3f8262c",
+    "paper_commit": "63cfaaa78dd0728296bea8a9aac29b963456333b",
+    "ci_url": "https://github.com/FlorianPfaff/DP-RFS-Hybrid/actions/runs/37144283710",
+    "validation_sha256": "602f6fe4244c6a50fc0ad8024bda3bcac54967c84a736cfa151e74c6f77fa5d6",
+    "locked_unix": 1791055069.252099,
+    "instruction": "Commit this file before running heldout; never retune from heldout."
+  },
+  "primary": {
+    "dp": 5.000569380441748,
+    "baseline": 4.762623217221499,
+    "improvement": -0.2379461632202493,
+    "improvement_percent": -4.996115635598526,
+    "difference_ci": [
+      -0.29674662502172233,
+      -0.18045451622231798
+    ],
+    "percent_ci": [
+      -6.242317840045147,
+      -3.7847415045319504
+    ]
+  },
+  "replay": {
+    "dp": 6.259396397470315,
+    "baseline": 6.990695748095541,
+    "improvement": 0.7312993506252268,
+    "improvement_percent": 10.461038170978215,
+    "difference_ci": [
+      0.6844409038645172,
+      0.7783640862430444
+    ],
+    "percent_ci": [
+      9.743485442959383,
+      11.197479812538983
+    ]
+  },
+  "conditions": {
+    "stationary2": {
+      "dp": 4.433016911037864,
+      "baseline": 4.667624409429782,
+      "improvement": 0.23460749839191677,
+      "improvement_percent": 5.026271992192668,
+      "difference_ci": [
+        0.18895748586185482,
+        0.2805327469165767
+      ],
+      "percent_ci": [
+        4.066538567481661,
+        5.981224839139185
+      ]
+    },
+    "stationary4": {
+      "dp": 4.761529862629796,
+      "baseline": 4.691791634822431,
+      "improvement": -0.06973822780736369,
+      "improvement_percent": -1.4863879991977609,
+      "difference_ci": [
+        -0.16196572547647212,
+        0.01761839521804135
+      ],
+      "percent_ci": [
+        -3.464637423433543,
+        0.3727735139464533
+      ]
+    },
+    "stationary8": {
+      "dp": 5.807161367657584,
+      "baseline": 4.928453607412283,
+      "improvement": -0.8787077602453012,
+      "improvement_percent": -17.82927932858583,
+      "difference_ci": [
+        -0.9905074847188259,
+        -0.7671003683931952
+      ],
+      "percent_ci": [
+        -20.12732829380001,
+        -15.538791912993414
+      ]
+    },
+    "nonrecurring": {
+      "dp": 7.548394028126572,
+      "baseline": 4.809527196325611,
+      "improvement": -2.738866831800961,
+      "improvement_percent": -56.94669600565736,
+      "difference_ci": [
+        -2.8031501136704233,
+        -2.6753409788268945
+      ],
+      "percent_ci": [
+        -58.67160260181921,
+        -55.24234605069335
+      ]
+    },
+    "high_clutter": {
+      "dp": 6.500915845944056,
+      "baseline": 7.368462533217792,
+      "improvement": 0.8675466872737367,
+      "improvement_percent": 11.773781618115658,
+      "difference_ci": [
+        0.6699428848681235,
+        1.0678495771636944
+      ],
+      "percent_ci": [
+        9.151003006442851,
+        14.37520375137477
+      ]
+    },
+    "drift": {
+      "dp": 4.741228696187963,
+      "baseline": 4.678240584131262,
+      "improvement": -0.06298811205670156,
+      "improvement_percent": -1.3464060029396152,
+      "difference_ci": [
+        -0.14796371967232513,
+        0.01731372161108199
+      ],
+      "percent_ci": [
+        -3.157324346880924,
+        0.3694972768362786
+      ]
+    }
+  },
+  "decision": "no-go",
+  "table": {
+    "dp": {
+      "stationary2": {
+        "gospa": {
+          "mean": 4.433016911037864,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 3.9147028907375905,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.202109375,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.17859375,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.4949166666666667,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.05,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.074375,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.42744202706211404,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 3.792761206202007,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 612.98,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 5.609049491970291,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 17.67,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 172.4,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1767,
+          "clutter_only": 141,
+          "mixed": 113
+        },
+        "replay_log_loss": 4.023961123634628
+      },
+      "stationary4": {
+        "gospa": {
+          "mean": 4.761529862629796,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 6.526279858779104,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.26359375,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.181015625,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.8129358974358973,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.33,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.07875,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.7592858008069845,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 5.901906484749165,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 883.91,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 7.763751307269631,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 17.62,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 178.8,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1762,
+          "clutter_only": 151,
+          "mixed": 124
+        },
+        "replay_log_loss": 6.224258875039919
+      },
+      "stationary8": {
+        "gospa": {
+          "mean": 5.807161367657584,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 9.39215539143739,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.49734375,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.17125,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 2.598972111222112,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 2.17,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.08875,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 1.4598805227201859,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 7.861943073562101,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 1133.96,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 7.093461555789982,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 15.78,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 185.78,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1578,
+          "clutter_only": 161,
+          "mixed": 128
+        },
+        "replay_log_loss": 8.529969193736399
+      },
+      "nonrecurring": {
+        "gospa": {
+          "mean": 7.548394028126572,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 12.96847132123088,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.969921875,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.14625,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 4.5051219336219335,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 6.25,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.138125,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 3.3071481581427475,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 10.968265152840349,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 1532.16,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 3.42885596159962,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 11.76,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 206.66,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1176,
+          "clutter_only": 182,
+          "mixed": 133
+        },
+        "replay_log_loss": 13.103366102164644
+      },
+      "high_clutter": {
+        "gospa": {
+          "mean": 6.500915845944056,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 6.492630071242529,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.638359375,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.200625,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 3.2550692363192364,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 3.18,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.13625,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 1.1565164627172997,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 2.2163347064687517,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 411.88,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 2.790859136809886,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 12.12,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 96.21,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1212,
+          "clutter_only": 22,
+          "mixed": 172
+        },
+        "replay_log_loss": 5.282243212992956
+      },
+      "drift": {
+        "gospa": {
+          "mean": 4.741228696187963,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 7.488597982206081,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.26109375,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.176171875,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.7611561355311358,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.47,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.095625,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.8145411510852952,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 5.729088461058452,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 860.38,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 7.121819933540246,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 17.4,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 174.99,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1740,
+          "clutter_only": 148,
+          "mixed": 118
+        },
+        "replay_log_loss": 7.134802918299486
+      }
+    },
+    "finite": {
+      "stationary2": {
+        "gospa": {
+          "mean": 5.722964429011532,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 5.9145138153482355,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.585625,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.09671875,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.6421529859029855,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 3.95,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.028125,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.4845385020510193,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 1.9090744238091946,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 372.45,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 2.030313354730097,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 12.44,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 56.45,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1244,
+          "clutter_only": 33,
+          "mixed": 73
+        },
+        "replay_log_loss": 3.7304087707879625
+      },
+      "stationary4": {
+        "gospa": {
+          "mean": 7.292619029802687,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 9.683957762146111,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.997109375,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.071875,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.847328477078477,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 8.29,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.01875,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.6766762659436363,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 2.0991391577423544,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 396.7,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 1.0190810108508594,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 8.16,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 54.81,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 816,
+          "clutter_only": 41,
+          "mixed": 51
+        },
+        "replay_log_loss": 6.185960006535269
+      },
+      "stationary8": {
+        "gospa": {
+          "mean": 8.004286514099668,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 11.768636263748007,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 1.224453125,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.055546875,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 2.1281468253968256,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 10.73,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.02125,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.8724647889961723,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 2.308045377233489,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 423.44,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 0.5357720735806651,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 5.76,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 54.64,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 576,
+          "clutter_only": 46,
+          "mixed": 38
+        },
+        "replay_log_loss": 8.952621090821513
+      },
+      "nonrecurring": {
+        "gospa": {
+          "mean": 8.802038513802096,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 13.38768535505686,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 1.505625,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.033828125,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 2.387833333333333,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 13.81,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.01875,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 1.022778475742113,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 2.3622237951797467,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 430.38,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 0.1257013518398162,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 2.64,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 56.15,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 264,
+          "clutter_only": 46,
+          "mixed": 29
+        },
+        "replay_log_loss": 26.07411249513102
+      },
+      "high_clutter": {
+        "gospa": {
+          "mean": 7.38766414380962,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 8.075405194326898,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.96765625,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.118984375,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 2.753521941021941,
+          "defined_runs": 99
+        },
+        "unconfirmed_targets": {
+          "mean": 7.34,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.05625,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.6380033676360823,
+          "defined_runs": 98
+        },
+        "model_size": {
+          "mean": 1.1886785691021131,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 280.11,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 0.9209079079897492,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 8.01,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 47.21,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 801,
+          "clutter_only": 14,
+          "mixed": 116
+        },
+        "replay_log_loss": 4.971015353801955
+      },
+      "drift": {
+        "gospa": {
+          "mean": 6.5874691774617204,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 9.83291498031952,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.800390625,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.083046875,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.8702187673437676,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 6.23,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.026875,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.7682593143383637,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 2.5587843087021724,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 455.06,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 1.6549134060001962,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 10.14,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 55.06,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1014,
+          "clutter_only": 35,
+          "mixed": 60
+        },
+        "replay_log_loss": 7.266653148068261
+      }
+    },
+    "kde": {
+      "stationary2": {
+        "gospa": {
+          "mean": 4.667624409429782,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 5.107214202481182,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.19265625,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.229453125,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.475625,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.0,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.10875,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.6246388357164476,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 18.79,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 1153.76,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 0.5370907472904218,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 18.79,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 266.78,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1879,
+          "clutter_only": 225,
+          "mixed": 146
+        },
+        "replay_log_loss": 5.232777849225244
+      },
+      "stationary4": {
+        "gospa": {
+          "mean": 4.691791634822431,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 6.782661609314633,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.19359375,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.232734375,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.51875,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.0,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.09625,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.6378548629905929,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 19.08,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 1177.21,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 0.5445329360102914,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 19.08,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 270.23,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1908,
+          "clutter_only": 238,
+          "mixed": 165
+        },
+        "replay_log_loss": 6.912368811990268
+      },
+      "stationary8": {
+        "gospa": {
+          "mean": 4.928453607412283,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 9.02829171103951,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.239609375,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.232734375,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.96375,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.0,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.10625,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.9433478670401051,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 19.05,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 1179.4,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 0.5611647753303259,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 19.05,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 276.83,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1905,
+          "clutter_only": 246,
+          "mixed": 141
+        },
+        "replay_log_loss": 8.826940583071114
+      },
+      "nonrecurring": {
+        "gospa": {
+          "mean": 4.809527196325611,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 12.770897359923547,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.211171875,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.234921875,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.74875,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.0,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.135625,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.7608165499387154,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 19.37,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 1207.54,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 0.5640837019202445,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 19.37,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 281.25,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1937,
+          "clutter_only": 256,
+          "mixed": 159
+        },
+        "replay_log_loss": 12.769586184051297
+      },
+      "high_clutter": {
+        "gospa": {
+          "mean": 7.368462533217792,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 8.412635811793557,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.943828125,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.134375,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 3.0272425105758436,
+          "defined_runs": 99
+        },
+        "unconfirmed_targets": {
+          "mean": 7.03,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.085,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 1.0164008316173885,
+          "defined_runs": 98
+        },
+        "model_size": {
+          "mean": 8.29,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 498.98,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 0.2787830063897127,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 8.29,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 59.92,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 829,
+          "clutter_only": 25,
+          "mixed": 142
+        },
+        "replay_log_loss": 6.1096065494413825
+      },
+      "drift": {
+        "gospa": {
+          "mean": 4.678240584131262,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 6.218738693009746,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.1934375,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.228984375,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.49625,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.0,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.118125,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.6601554938633645,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 18.86,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 1161.87,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 0.5320408825895719,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 18.86,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 268.37,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1886,
+          "clutter_only": 229,
+          "mixed": 149
+        },
+        "replay_log_loss": 6.332306142499459
+      }
+    },
+    "prior_feedback": {
+      "stationary2": {
+        "gospa": {
+          "mean": 4.431799490974383,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 3.921840418213618,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.201640625,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.178828125,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.4934583333333333,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.05,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.076875,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.4302040960229381,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 3.8150033695963566,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 616.32,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 5.89155966789971,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 17.7,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 172.22,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1770,
+          "clutter_only": 144,
+          "mixed": 113
+        },
+        "replay_log_loss": 4.030965983768919
+      },
+      "stationary4": {
+        "gospa": {
+          "mean": 4.763984374893464,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 6.53088418044559,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.264375,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.18078125,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.8076442307692306,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.34,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.078125,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.7481109717397507,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 5.879232626472942,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 881.27,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 7.77211311262974,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 17.6,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 178.42,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1760,
+          "clutter_only": 153,
+          "mixed": 122
+        },
+        "replay_log_loss": 6.218736777813533
+      },
+      "stationary8": {
+        "gospa": {
+          "mean": 5.808746546878629,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 9.396284105796672,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.49765625,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.171171875,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 2.58810397935398,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 2.17,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.0875,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 1.4517937559025043,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 7.837561038991174,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 1131.03,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 7.1856714249095965,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 15.78,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 185.38,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1578,
+          "clutter_only": 163,
+          "mixed": 126
+        },
+        "replay_log_loss": 8.531888481930544
+      },
+      "nonrecurring": {
+        "gospa": {
+          "mean": 7.547937262609887,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 12.966662975953055,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.970625,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.14546875,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 4.4907121212121215,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 6.27,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.138125,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 3.2896428162997755,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 10.896797145180209,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 1523.03,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 3.2682033970900375,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 11.73,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 206.27,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1173,
+          "clutter_only": 182,
+          "mixed": 133
+        },
+        "replay_log_loss": 13.101866401402551
+      },
+      "high_clutter": {
+        "gospa": {
+          "mean": 6.505066100992679,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 6.491489474757692,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.63984375,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.20015625,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 3.259484973359973,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 3.17,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.1375,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 1.1817823207516422,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 2.2290123630257264,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 413.74,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 2.6553086488303235,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 12.14,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 95.99,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1214,
+          "clutter_only": 22,
+          "mixed": 172
+        },
+        "replay_log_loss": 5.290845449984748
+      },
+      "drift": {
+        "gospa": {
+          "mean": 4.756771950542964,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 7.5035920818239985,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.264296875,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.17625,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 1.7556085164835167,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.49,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.091875,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 0.8049941229952425,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 5.708582233837233,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 857.23,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 6.682226958360334,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 17.38,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 174.52,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1738,
+          "clutter_only": 149,
+          "mixed": 121
+        },
+        "replay_log_loss": 7.139525513432925
+      }
+    },
+    "confirmation_time": {
+      "stationary2": {
+        "gospa": {
+          "mean": 5.08589064880273,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 12.940177755605184,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.319765625,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.18234375,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 2.5672916666666667,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.02,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.115625,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 5.431465633351856,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 5.163516947069377,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 790.35,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 7.415893697679712,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 18.04,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 182.47,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1804,
+          "clutter_only": 151,
+          "mixed": 126
+        },
+        "replay_log_loss": 12.949210702519899
+      },
+      "stationary4": {
+        "gospa": {
+          "mean": 5.391000882470149,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 12.95795425739294,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.386328125,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.1821875,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 2.9249642857142857,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.34,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.11125,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 5.782645761015733,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 7.124329670540244,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 1040.64,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 8.84739789916035,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 17.77,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 188.97,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1777,
+          "clutter_only": 157,
+          "mixed": 137
+        },
+        "replay_log_loss": 12.97940409755683
+      },
+      "stationary8": {
+        "gospa": {
+          "mean": 6.177672716875728,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 12.997580032742103,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.57875,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.1740625,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 3.3492135087135084,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 2.22,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.106875,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 6.169077442165675,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 8.6091295430493,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 1230.42,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 8.105269337469872,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 15.98,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 196.52,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1598,
+          "clutter_only": 185,
+          "mixed": 106
+        },
+        "replay_log_loss": 13.02174180065218
+      },
+      "nonrecurring": {
+        "gospa": {
+          "mean": 7.412566014297173,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 12.976857446972147,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.9240625,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.1496875,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 4.466046453546453,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 5.65,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.163125,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 7.219258886538302,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 11.951408993121891,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 1657.84,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 4.420872428480143,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 12.48,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 213.85,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1248,
+          "clutter_only": 188,
+          "mixed": 139
+        },
+        "replay_log_loss": 13.101888531459679
+      },
+      "high_clutter": {
+        "gospa": {
+          "mean": 7.451656081486841,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 12.729086998263732,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.883125,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.2021875,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 5.820908841158841,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 3.86,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.23875,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 7.790936242678891,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 3.656516439513303,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 595.61,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 3.136999408959964,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 11.33,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 103.87,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1133,
+          "clutter_only": 33,
+          "mixed": 154
+        },
+        "replay_log_loss": 12.643754814777378
+      },
+      "drift": {
+        "gospa": {
+          "mean": 5.282188616953504,
+          "defined_runs": 100
+        },
+        "log_loss": {
+          "mean": 11.014856810529515,
+          "defined_runs": 100
+        },
+        "missed": {
+          "mean": 0.36390625,
+          "defined_runs": 100
+        },
+        "false": {
+          "mean": 0.177578125,
+          "defined_runs": 100
+        },
+        "confirmation_delay": {
+          "mean": 2.8161845238095236,
+          "defined_runs": 100
+        },
+        "unconfirmed_targets": {
+          "mean": 0.38,
+          "defined_runs": 100
+        },
+        "fragmentation": {
+          "mean": 0.13375,
+          "defined_runs": 100
+        },
+        "birth_time_error": {
+          "mean": 5.727223647353677,
+          "defined_runs": 100
+        },
+        "model_size": {
+          "mean": 6.206966881409773,
+          "defined_runs": 100
+        },
+        "predictive_terms": {
+          "mean": 922.36,
+          "defined_runs": 100
+        },
+        "runtime": {
+          "mean": 7.715704906579849,
+          "defined_runs": 100
+        },
+        "admitted": {
+          "mean": 17.76,
+          "defined_runs": 100
+        },
+        "initiations": {
+          "mean": 183.97,
+          "defined_runs": 100
+        },
+        "history_attribution": {
+          "total": 1776,
+          "clutter_only": 155,
+          "mixed": 118
+        },
+        "replay_log_loss": 11.057981187991752
+      }
+    }
+  },
+  "failure_examples": [
+    {
+      "seed": 235,
+      "condition": "stationary2",
+      "dp_gospa": 5.14163191104422,
+      "baseline_gospa": 4.7157841020919395,
+      "dp": {
+        "seed": 235,
+        "condition": "stationary2",
+        "config": {
+          "learner": "dp",
+          "alpha": 5
+        },
+        "mode": "closed",
+        "particles": 128,
+        "algorithm_seed": 0,
+        "status": "ok",
+        "gospa": 5.14163191104422,
+        "log_loss": 3.5787543340099157,
+        "birth_losses": [
+          12.158213718754709,
+          4.614242048523864,
+          1.7439835800129901,
+          1.9681828753722987,
+          12.78379961770197,
+          3.6687851348363316,
+          2.6545533009633,
+          2.7322258853777326,
+          0.8573917057154414,
+          5.3972932393203585,
+          3.2272246726124507,
+          2.2594530540319018,
+          0.008867583342272667,
+          0.581627360536757,
+          0.9864405794908513,
+          1.617784987565431
+        ],
+        "missed": 0.34375,
+        "false": 0.1640625,
+        "confirmation_delay": 2.0,
+        "unconfirmed_targets": 0,
+        "fragmentation": 0.1875,
+        "birth_time_error": 0.9500979634547334,
+        "model_size": 4.020446148760424,
+        "histories": [
+          {
+            "label": 6,
+            "first": 1,
+            "end": 5,
+            "target": 0,
+            "purity": 1.0,
+            "birth_estimate": 0.9531250000000002,
+            "true_birth": 0
+          },
+          {
+            "label": 34,
+            "first": 8,
+            "end": 12,
+            "target": 1,
+            "purity": 1.0,
+            "birth_estimate": 7.964748449672563,
+            "true_birth": 8
+          },
+          {
+            "label": 51,
+            "first": 12,
+            "end": 16,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 11.868775555210737,
+            "true_birth": null
+          },
+          {
+            "label": 63,
+            "first": 16,
+            "end": 20,
+            "target": 2,
+            "purity": 1.0,
+            "birth_estimate": 15.957624172565032,
+            "true_birth": 16
+          },
+          {
+            "label": 85,
+            "first": 26,
+            "end": 30,
+            "target": 3,
+            "purity": 1.0,
+            "birth_estimate": 25.771557329635343,
+            "true_birth": 24
+          },
+          {
+            "label": 99,
+            "first": 32,
+            "end": 36,
+            "target": 4,
+            "purity": 1.0,
+            "birth_estimate": 31.864987929438982,
+            "true_birth": 32
+          },
+          {
+            "label": 111,
+            "first": 40,
+            "end": 44,
+            "target": 5,
+            "purity": 1.0,
+            "birth_estimate": 39.90674249506513,
+            "true_birth": 40
+          },
+          {
+            "label": 126,
+            "first": 48,
+            "end": 52,
+            "target": 6,
+            "purity": 1.0,
+            "birth_estimate": 47.96530946402037,
+            "true_birth": 48
+          },
+          {
+            "label": 137,
+            "first": 56,
+            "end": 60,
+            "target": 7,
+            "purity": 1.0,
+            "birth_estimate": 55.991414453919504,
+            "true_birth": 56
+          },
+          {
+            "label": 143,
+            "first": 64,
+            "end": 68,
+            "target": 8,
+            "purity": 1.0,
+            "birth_estimate": 63.99835737815249,
+            "true_birth": 64
+          },
+          {
+            "label": 158,
+            "first": 80,
+            "end": 84,
+            "target": 10,
+            "purity": 1.0,
+            "birth_estimate": 79.87831742112272,
+            "true_birth": 80
+          },
+          {
+            "label": 162,
+            "first": 83,
+            "end": 87,
+            "target": 9,
+            "purity": 1.0,
+            "birth_estimate": 82.90366434775301,
+            "true_birth": 72
+          },
+          {
+            "label": 166,
+            "first": 88,
+            "end": 92,
+            "target": 11,
+            "purity": 1.0,
+            "birth_estimate": 87.99092386606961,
+            "true_birth": 88
+          },
+          {
+            "label": 169,
+            "first": 96,
+            "end": 100,
+            "target": 12,
+            "purity": 1.0,
+            "birth_estimate": 95.91508752010101,
+            "true_birth": 96
+          },
+          {
+            "label": 170,
+            "first": 104,
+            "end": 108,
+            "target": 13,
+            "purity": 1.0,
+            "birth_estimate": 103.93281724404152,
+            "true_birth": 104
+          },
+          {
+            "label": 171,
+            "first": 112,
+            "end": 116,
+            "target": 14,
+            "purity": 1.0,
+            "birth_estimate": 111.99999999999989,
+            "true_birth": 112
+          },
+          {
+            "label": 173,
+            "first": 121,
+            "end": 125,
+            "target": 15,
+            "purity": 1.0,
+            "birth_estimate": 120.9395511320562,
+            "true_birth": 120
+          }
+        ],
+        "admitted": 17,
+        "initiations": 174,
+        "predictive_terms": 641,
+        "runtime": 5.175320080001256,
+        "total_runtime": 5.1911758330024895,
+        "sensor": {
+          "detection": 0.9,
+          "clutter": 6.0,
+          "survival": 0.98,
+          "birth_rate": 0.125
+        }
+      },
+      "baseline": {
+        "seed": 235,
+        "condition": "stationary2",
+        "config": {
+          "learner": "kde",
+          "bandwidth": 1.0,
+          "residual": 0.5
+        },
+        "mode": "closed",
+        "particles": 128,
+        "algorithm_seed": 0,
+        "status": "ok",
+        "gospa": 4.7157841020919395,
+        "log_loss": 4.65985883880457,
+        "birth_losses": [
+          12.158213718754709,
+          3.712678432845738,
+          2.4501340743240303,
+          2.239911756936248,
+          12.78379961770197,
+          3.7993989907138337,
+          3.475893400036918,
+          3.4111137665497595,
+          2.9444369170807683,
+          4.896802015085253,
+          4.572556796041642,
+          3.9087656682321397,
+          3.397050549653593,
+          3.320537490499242,
+          3.551039656575891,
+          3.9354085698413774
+        ],
+        "missed": 0.234375,
+        "false": 0.1875,
+        "confirmation_delay": 1.625,
+        "unconfirmed_targets": 0,
+        "fragmentation": 0.375,
+        "birth_time_error": 1.031722027349843,
+        "model_size": 17,
+        "histories": [
+          {
+            "label": 6,
+            "first": 1,
+            "end": 5,
+            "target": 0,
+            "purity": 1.0,
+            "birth_estimate": 0.9147903773988082,
+            "true_birth": 0
+          },
+          {
+            "label": 29,
+            "first": 8,
+            "end": 12,
+            "target": 1,
+            "purity": 1.0,
+            "birth_estimate": 7.895940084032003,
+            "true_birth": 8
+          },
+          {
+            "label": 44,
+            "first": 16,
+            "end": 20,
+            "target": 2,
+            "purity": 1.0,
+            "birth_estimate": 15.89597184029061,
+            "true_birth": 16
+          },
+          {
+            "label": 64,
+            "first": 26,
+            "end": 30,
+            "target": 3,
+            "purity": 1.0,
+            "birth_estimate": 25.895161090472982,
+            "true_birth": 24
+          },
+          {
+            "label": 76,
+            "first": 32,
+            "end": 36,
+            "target": 4,
+            "purity": 1.0,
+            "birth_estimate": 31.894637246936306,
+            "true_birth": 32
+          },
+          {
+            "label": 90,
+            "first": 40,
+            "end": 44,
+            "target": 5,
+            "purity": 1.0,
+            "birth_estimate": 39.89471842085121,
+            "true_birth": 40
+          },
+          {
+            "label": 111,
+            "first": 48,
+            "end": 52,
+            "target": 6,
+            "purity": 1.0,
+            "birth_estimate": 47.8939744987699,
+            "true_birth": 48
+          },
+          {
+            "label": 124,
+            "first": 56,
+            "end": 60,
+            "target": 7,
+            "purity": 1.0,
+            "birth_estimate": 55.89681946488836,
+            "true_birth": 56
+          },
+          {
+            "label": 135,
+            "first": 64,
+            "end": 68,
+            "target": 8,
+            "purity": 1.0,
+            "birth_estimate": 63.89659840594185,
+            "true_birth": 64
+          },
+          {
+            "label": 155,
+            "first": 74,
+            "end": 78,
+            "target": 9,
+            "purity": 1.0,
+            "birth_estimate": 73.89488821657686,
+            "true_birth": 72
+          },
+          {
+            "label": 163,
+            "first": 79,
+            "end": 83,
+            "target": 10,
+            "purity": 0.8,
+            "birth_estimate": 78.8945409543673,
+            "true_birth": 80
+          },
+          {
+            "label": 187,
+            "first": 91,
+            "end": 95,
+            "target": 11,
+            "purity": 1.0,
+            "birth_estimate": 90.89478544022731,
+            "true_birth": 88
+          },
+          {
+            "label": 195,
+            "first": 96,
+            "end": 100,
+            "target": 12,
+            "purity": 1.0,
+            "birth_estimate": 95.89654812531471,
+            "true_birth": 96
+          },
+          {
+            "label": 211,
+            "first": 103,
+            "end": 107,
+            "target": 12,
+            "purity": 1.0,
+            "birth_estimate": 102.8957210098931,
+            "true_birth": 96
+          },
+          {
+            "label": 214,
+            "first": 104,
+            "end": 108,
+            "target": 13,
+            "purity": 1.0,
+            "birth_estimate": 103.89710556754949,
+            "true_birth": 104
+          },
+          {
+            "label": 233,
+            "first": 112,
+            "end": 116,
+            "target": 14,
+            "purity": 1.0,
+            "birth_estimate": 111.8948987378637,
+            "true_birth": 112
+          },
+          {
+            "label": 259,
+            "first": 121,
+            "end": 125,
+            "target": 15,
+            "purity": 1.0,
+            "birth_estimate": 120.89568167718372,
+            "true_birth": 120
+          }
+        ],
+        "admitted": 17,
+        "initiations": 275,
+        "predictive_terms": 1089,
+        "runtime": 0.4845340739993844,
+        "total_runtime": 0.49948666999989655,
+        "sensor": {
+          "detection": 0.9,
+          "clutter": 6.0,
+          "survival": 0.98,
+          "birth_rate": 0.125
+        }
+      }
+    },
+    {
+      "seed": 229,
+      "condition": "stationary4",
+      "dp_gospa": 6.792417622852818,
+      "baseline_gospa": 4.667664883177698,
+      "dp": {
+        "seed": 229,
+        "condition": "stationary4",
+        "config": {
+          "learner": "dp",
+          "alpha": 5
+        },
+        "mode": "closed",
+        "particles": 128,
+        "algorithm_seed": 0,
+        "status": "ok",
+        "gospa": 6.792417622852818,
+        "log_loss": 9.710474220358158,
+        "birth_losses": [
+          12.180864578396879,
+          12.30094568616736,
+          12.817970341227742,
+          5.900623807588603,
+          3.708078713732694,
+          11.153876442481645,
+          6.515038822620382,
+          2.9098396917217575,
+          2.0082691007764675,
+          5.300604824264685,
+          13.46333257614133,
+          13.406994777467943,
+          13.427682760830312,
+          13.43017316286981,
+          13.436382618177483,
+          13.406909621265426
+        ],
+        "missed": 0.7578125,
+        "false": 0.15625,
+        "confirmation_delay": 1.7,
+        "unconfirmed_targets": 6,
+        "fragmentation": 0.125,
+        "birth_time_error": 0.7174361057929414,
+        "model_size": 6.012023222960923,
+        "histories": [
+          {
+            "label": 10,
+            "first": 2,
+            "end": 6,
+            "target": 0,
+            "purity": 1.0,
+            "birth_estimate": 1.8359375000000007,
+            "true_birth": 0
+          },
+          {
+            "label": 39,
+            "first": 8,
+            "end": 12,
+            "target": 1,
+            "purity": 0.5,
+            "birth_estimate": 7.906250000000003,
+            "true_birth": 8
+          },
+          {
+            "label": 45,
+            "first": 9,
+            "end": 13,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 8.906250000000002,
+            "true_birth": null
+          },
+          {
+            "label": 50,
+            "first": 10,
+            "end": 14,
+            "target": 1,
+            "purity": 0.8,
+            "birth_estimate": 9.929687500206686,
+            "true_birth": 8
+          },
+          {
+            "label": 68,
+            "first": 16,
+            "end": 20,
+            "target": 2,
+            "purity": 1.0,
+            "birth_estimate": 15.898437500317575,
+            "true_birth": 16
+          },
+          {
+            "label": 95,
+            "first": 24,
+            "end": 28,
+            "target": 3,
+            "purity": 1.0,
+            "birth_estimate": 23.877937828683113,
+            "true_birth": 24
+          },
+          {
+            "label": 117,
+            "first": 32,
+            "end": 36,
+            "target": 4,
+            "purity": 1.0,
+            "birth_estimate": 31.80693753696651,
+            "true_birth": 32
+          },
+          {
+            "label": 130,
+            "first": 40,
+            "end": 44,
+            "target": 5,
+            "purity": 1.0,
+            "birth_estimate": 39.986027467617205,
+            "true_birth": 40
+          },
+          {
+            "label": 147,
+            "first": 50,
+            "end": 54,
+            "target": 6,
+            "purity": 1.0,
+            "birth_estimate": 49.86276926596306,
+            "true_birth": 48
+          },
+          {
+            "label": 150,
+            "first": 50,
+            "end": 54,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 49.8849554575102,
+            "true_birth": null
+          },
+          {
+            "label": 155,
+            "first": 57,
+            "end": 61,
+            "target": 7,
+            "purity": 1.0,
+            "birth_estimate": 56.734375,
+            "true_birth": 56
+          },
+          {
+            "label": 159,
+            "first": 63,
+            "end": 67,
+            "target": 8,
+            "purity": 0.8,
+            "birth_estimate": 63.00000000000013,
+            "true_birth": 64
+          },
+          {
+            "label": 163,
+            "first": 72,
+            "end": 76,
+            "target": 9,
+            "purity": 1.0,
+            "birth_estimate": 71.99538176886286,
+            "true_birth": 72
+          }
+        ],
+        "admitted": 13,
+        "initiations": 175,
+        "predictive_terms": 897,
+        "runtime": 2.5585737039946252,
+        "total_runtime": 2.573839360004058,
+        "sensor": {
+          "detection": 0.9,
+          "clutter": 6.0,
+          "survival": 0.98,
+          "birth_rate": 0.125
+        }
+      },
+      "baseline": {
+        "seed": 229,
+        "condition": "stationary4",
+        "config": {
+          "learner": "kde",
+          "bandwidth": 1.0,
+          "residual": 0.5
+        },
+        "mode": "closed",
+        "particles": 128,
+        "algorithm_seed": 0,
+        "status": "ok",
+        "gospa": 4.667664883177698,
+        "log_loss": 6.932079316598903,
+        "birth_losses": [
+          12.180864578396879,
+          12.81177130993335,
+          12.923330856885569,
+          5.116722457217589,
+          5.014659978313902,
+          10.5648601748962,
+          3.9693015724520095,
+          4.408499814643616,
+          4.0647883856825135,
+          5.6260252029950735,
+          12.87554591123921,
+          4.613062449014408,
+          4.610873618127871,
+          4.031192222997825,
+          3.871788448109574,
+          4.229982084676871
+        ],
+        "missed": 0.1796875,
+        "false": 0.234375,
+        "confirmation_delay": 1.5,
+        "unconfirmed_targets": 0,
+        "fragmentation": 0.1875,
+        "birth_time_error": 0.5839901444740858,
+        "model_size": 21,
+        "histories": [
+          {
+            "label": 10,
+            "first": 2,
+            "end": 6,
+            "target": 0,
+            "purity": 1.0,
+            "birth_estimate": 1.8987657050288815,
+            "true_birth": 0
+          },
+          {
+            "label": 37,
+            "first": 8,
+            "end": 12,
+            "target": 1,
+            "purity": 0.5,
+            "birth_estimate": 7.9039786786867,
+            "true_birth": 8
+          },
+          {
+            "label": 44,
+            "first": 10,
+            "end": 14,
+            "target": 1,
+            "purity": 0.8,
+            "birth_estimate": 9.892375783606878,
+            "true_birth": 8
+          },
+          {
+            "label": 56,
+            "first": 16,
+            "end": 20,
+            "target": 2,
+            "purity": 1.0,
+            "birth_estimate": 15.896751811848358,
+            "true_birth": 16
+          },
+          {
+            "label": 81,
+            "first": 24,
+            "end": 28,
+            "target": 3,
+            "purity": 1.0,
+            "birth_estimate": 23.894949015750736,
+            "true_birth": 24
+          },
+          {
+            "label": 105,
+            "first": 32,
+            "end": 36,
+            "target": 4,
+            "purity": 1.0,
+            "birth_estimate": 31.89789243895098,
+            "true_birth": 32
+          },
+          {
+            "label": 125,
+            "first": 40,
+            "end": 44,
+            "target": 5,
+            "purity": 1.0,
+            "birth_estimate": 39.89533348252157,
+            "true_birth": 40
+          },
+          {
+            "label": 127,
+            "first": 41,
+            "end": 45,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 40.89658829747028,
+            "true_birth": null
+          },
+          {
+            "label": 139,
+            "first": 46,
+            "end": 50,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 45.89788324098215,
+            "true_birth": null
+          },
+          {
+            "label": 144,
+            "first": 50,
+            "end": 54,
+            "target": 6,
+            "purity": 1.0,
+            "birth_estimate": 49.89555781982785,
+            "true_birth": 48
+          },
+          {
+            "label": 148,
+            "first": 50,
+            "end": 54,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 49.89177792584512,
+            "true_birth": null
+          },
+          {
+            "label": 161,
+            "first": 57,
+            "end": 61,
+            "target": 7,
+            "purity": 1.0,
+            "birth_estimate": 56.895148485377625,
+            "true_birth": 56
+          },
+          {
+            "label": 172,
+            "first": 63,
+            "end": 67,
+            "target": 8,
+            "purity": 0.8,
+            "birth_estimate": 62.89794921660865,
+            "true_birth": 64
+          },
+          {
+            "label": 187,
+            "first": 72,
+            "end": 76,
+            "target": 9,
+            "purity": 1.0,
+            "birth_estimate": 71.896120980043,
+            "true_birth": 72
+          },
+          {
+            "label": 204,
+            "first": 80,
+            "end": 84,
+            "target": 10,
+            "purity": 1.0,
+            "birth_estimate": 79.89577216175708,
+            "true_birth": 80
+          },
+          {
+            "label": 218,
+            "first": 88,
+            "end": 92,
+            "target": 11,
+            "purity": 1.0,
+            "birth_estimate": 87.89742843121114,
+            "true_birth": 88
+          },
+          {
+            "label": 234,
+            "first": 96,
+            "end": 100,
+            "target": 12,
+            "purity": 1.0,
+            "birth_estimate": 95.89455846883473,
+            "true_birth": 96
+          },
+          {
+            "label": 249,
+            "first": 104,
+            "end": 108,
+            "target": 13,
+            "purity": 1.0,
+            "birth_estimate": 103.89692303894589,
+            "true_birth": 104
+          },
+          {
+            "label": 265,
+            "first": 111,
+            "end": 115,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 110.88880754960704,
+            "true_birth": null
+          },
+          {
+            "label": 266,
+            "first": 112,
+            "end": 116,
+            "target": 14,
+            "purity": 1.0,
+            "birth_estimate": 111.89497498996464,
+            "true_birth": 112
+          },
+          {
+            "label": 282,
+            "first": 119,
+            "end": 123,
+            "target": 15,
+            "purity": 0.8,
+            "birth_estimate": 118.89138262265831,
+            "true_birth": 120
+          }
+        ],
+        "admitted": 21,
+        "initiations": 300,
+        "predictive_terms": 1243,
+        "runtime": 0.5204583600061596,
+        "total_runtime": 0.5344943789968966,
+        "sensor": {
+          "detection": 0.9,
+          "clutter": 6.0,
+          "survival": 0.98,
+          "birth_rate": 0.125
+        }
+      }
+    },
+    {
+      "seed": 229,
+      "condition": "stationary8",
+      "dp_gospa": 7.184900738999485,
+      "baseline_gospa": 4.74614101574724,
+      "dp": {
+        "seed": 229,
+        "condition": "stationary8",
+        "config": {
+          "learner": "dp",
+          "alpha": 5
+        },
+        "mode": "closed",
+        "particles": 128,
+        "algorithm_seed": 0,
+        "status": "ok",
+        "gospa": 7.184900738999485,
+        "log_loss": 12.002357555386741,
+        "birth_losses": [
+          12.09331747116039,
+          12.369169179427836,
+          13.029272756326904,
+          13.12863268522631,
+          7.9290545525968135,
+          13.126623871161819,
+          13.135187995531616,
+          11.217251503215902,
+          2.498140527572934,
+          12.36345737917941,
+          13.54607810718892,
+          13.529556220156534,
+          13.50766674435734,
+          13.516571883079795,
+          13.471699016234933,
+          13.576040993770405
+        ],
+        "missed": 0.8359375,
+        "false": 0.1796875,
+        "confirmation_delay": 2.9,
+        "unconfirmed_targets": 6,
+        "fragmentation": 0.125,
+        "birth_time_error": 2.396743636144333,
+        "model_size": 8.6015625,
+        "histories": [
+          {
+            "label": 9,
+            "first": 2,
+            "end": 6,
+            "target": 0,
+            "purity": 1.0,
+            "birth_estimate": 1.9062500000000004,
+            "true_birth": 0
+          },
+          {
+            "label": 42,
+            "first": 9,
+            "end": 13,
+            "target": 1,
+            "purity": 1.0,
+            "birth_estimate": 8.921875000000004,
+            "true_birth": 8
+          },
+          {
+            "label": 45,
+            "first": 9,
+            "end": 13,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 8.859375000000004,
+            "true_birth": null
+          },
+          {
+            "label": 50,
+            "first": 10,
+            "end": 14,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 9.477751831143475,
+            "true_birth": null
+          },
+          {
+            "label": 71,
+            "first": 17,
+            "end": 21,
+            "target": 2,
+            "purity": 1.0,
+            "birth_estimate": 16.848978641060622,
+            "true_birth": 16
+          },
+          {
+            "label": 101,
+            "first": 26,
+            "end": 30,
+            "target": 3,
+            "purity": 1.0,
+            "birth_estimate": 25.87366639538609,
+            "true_birth": 24
+          },
+          {
+            "label": 107,
+            "first": 27,
+            "end": 31,
+            "target": 2,
+            "purity": 0.6666666666666666,
+            "birth_estimate": 26.892564547601953,
+            "true_birth": 16
+          },
+          {
+            "label": 118,
+            "first": 32,
+            "end": 36,
+            "target": 4,
+            "purity": 1.0,
+            "birth_estimate": 31.99276732153443,
+            "true_birth": 32
+          },
+          {
+            "label": 141,
+            "first": 45,
+            "end": 49,
+            "target": 5,
+            "purity": 1.0,
+            "birth_estimate": 44.93705023507332,
+            "true_birth": 40
+          },
+          {
+            "label": 149,
+            "first": 50,
+            "end": 54,
+            "target": 6,
+            "purity": 1.0,
+            "birth_estimate": 49.99218750000011,
+            "true_birth": 48
+          },
+          {
+            "label": 152,
+            "first": 50,
+            "end": 54,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 49.890625000000085,
+            "true_birth": null
+          },
+          {
+            "label": 156,
+            "first": 57,
+            "end": 61,
+            "target": 7,
+            "purity": 1.0,
+            "birth_estimate": 56.9921875,
+            "true_birth": 56
+          },
+          {
+            "label": 157,
+            "first": 63,
+            "end": 67,
+            "target": 8,
+            "purity": 0.8,
+            "birth_estimate": 63.0,
+            "true_birth": 64
+          },
+          {
+            "label": 161,
+            "first": 73,
+            "end": 77,
+            "target": 9,
+            "purity": 1.0,
+            "birth_estimate": 72.9921875,
+            "true_birth": 72
+          }
+        ],
+        "admitted": 14,
+        "initiations": 183,
+        "predictive_terms": 1229,
+        "runtime": 3.8109684359951643,
+        "total_runtime": 3.8261517170030857,
+        "sensor": {
+          "detection": 0.9,
+          "clutter": 6.0,
+          "survival": 0.98,
+          "birth_rate": 0.125
+        }
+      },
+      "baseline": {
+        "seed": 229,
+        "condition": "stationary8",
+        "config": {
+          "learner": "kde",
+          "bandwidth": 1.0,
+          "residual": 0.5
+        },
+        "mode": "closed",
+        "particles": 128,
+        "algorithm_seed": 0,
+        "status": "ok",
+        "gospa": 4.74614101574724,
+        "log_loss": 9.210844623570047,
+        "birth_losses": [
+          12.09331747116039,
+          12.879994803193826,
+          13.134633271984718,
+          13.12863268522631,
+          8.854101897324034,
+          12.864259606694327,
+          3.99824378530355,
+          10.285095621213417,
+          5.830182579570618,
+          9.130250157083381,
+          12.904224221016968,
+          4.533204032481594,
+          4.49649916040654,
+          12.8747179969074,
+          5.3000170501661055,
+          5.06613963738759
+        ],
+        "missed": 0.21875,
+        "false": 0.2109375,
+        "confirmation_delay": 1.9375,
+        "unconfirmed_targets": 0,
+        "fragmentation": 0.0625,
+        "birth_time_error": 0.7132890783893613,
+        "model_size": 20,
+        "histories": [
+          {
+            "label": 9,
+            "first": 2,
+            "end": 6,
+            "target": 0,
+            "purity": 1.0,
+            "birth_estimate": 1.8969279473106733,
+            "true_birth": 0
+          },
+          {
+            "label": 39,
+            "first": 9,
+            "end": 13,
+            "target": 1,
+            "purity": 1.0,
+            "birth_estimate": 8.895536332498606,
+            "true_birth": 8
+          },
+          {
+            "label": 44,
+            "first": 10,
+            "end": 14,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 9.892623928210957,
+            "true_birth": null
+          },
+          {
+            "label": 63,
+            "first": 18,
+            "end": 22,
+            "target": 2,
+            "purity": 1.0,
+            "birth_estimate": 17.89670191944256,
+            "true_birth": 16
+          },
+          {
+            "label": 87,
+            "first": 26,
+            "end": 30,
+            "target": 3,
+            "purity": 1.0,
+            "birth_estimate": 25.89664412155215,
+            "true_birth": 24
+          },
+          {
+            "label": 105,
+            "first": 32,
+            "end": 36,
+            "target": 4,
+            "purity": 1.0,
+            "birth_estimate": 31.897625679424767,
+            "true_birth": 32
+          },
+          {
+            "label": 126,
+            "first": 40,
+            "end": 44,
+            "target": 5,
+            "purity": 1.0,
+            "birth_estimate": 39.89664010972438,
+            "true_birth": 40
+          },
+          {
+            "label": 129,
+            "first": 41,
+            "end": 45,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 40.89658829747028,
+            "true_birth": null
+          },
+          {
+            "label": 148,
+            "first": 50,
+            "end": 54,
+            "target": 6,
+            "purity": 1.0,
+            "birth_estimate": 49.89536381537641,
+            "true_birth": 48
+          },
+          {
+            "label": 152,
+            "first": 50,
+            "end": 54,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 49.89177792584512,
+            "true_birth": null
+          },
+          {
+            "label": 163,
+            "first": 57,
+            "end": 61,
+            "target": 7,
+            "purity": 1.0,
+            "birth_estimate": 56.897426132812015,
+            "true_birth": 56
+          },
+          {
+            "label": 174,
+            "first": 63,
+            "end": 67,
+            "target": 8,
+            "purity": 0.8,
+            "birth_estimate": 62.89685927620565,
+            "true_birth": 64
+          },
+          {
+            "label": 192,
+            "first": 72,
+            "end": 76,
+            "target": 9,
+            "purity": 1.0,
+            "birth_estimate": 71.89524561951274,
+            "true_birth": 72
+          },
+          {
+            "label": 211,
+            "first": 80,
+            "end": 84,
+            "target": 10,
+            "purity": 1.0,
+            "birth_estimate": 79.89728265837543,
+            "true_birth": 80
+          },
+          {
+            "label": 226,
+            "first": 88,
+            "end": 92,
+            "target": 11,
+            "purity": 1.0,
+            "birth_estimate": 87.89905880327264,
+            "true_birth": 88
+          },
+          {
+            "label": 242,
+            "first": 96,
+            "end": 100,
+            "target": 12,
+            "purity": 1.0,
+            "birth_estimate": 95.89514887558751,
+            "true_birth": 96
+          },
+          {
+            "label": 256,
+            "first": 104,
+            "end": 108,
+            "target": 13,
+            "purity": 1.0,
+            "birth_estimate": 103.89557712194619,
+            "true_birth": 104
+          },
+          {
+            "label": 272,
+            "first": 111,
+            "end": 115,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 110.88880754960704,
+            "true_birth": null
+          },
+          {
+            "label": 273,
+            "first": 112,
+            "end": 116,
+            "target": 14,
+            "purity": 1.0,
+            "birth_estimate": 111.8969782900215,
+            "true_birth": 112
+          },
+          {
+            "label": 292,
+            "first": 120,
+            "end": 124,
+            "target": 15,
+            "purity": 1.0,
+            "birth_estimate": 119.89555858069184,
+            "true_birth": 120
+          }
+        ],
+        "admitted": 20,
+        "initiations": 308,
+        "predictive_terms": 1202,
+        "runtime": 0.5232733190059662,
+        "total_runtime": 0.5377658639990841,
+        "sensor": {
+          "detection": 0.9,
+          "clutter": 6.0,
+          "survival": 0.98,
+          "birth_rate": 0.125
+        }
+      }
+    },
+    {
+      "seed": 282,
+      "condition": "nonrecurring",
+      "dp_gospa": 7.7573985805426595,
+      "baseline_gospa": 4.297480236454461,
+      "dp": {
+        "seed": 282,
+        "condition": "nonrecurring",
+        "config": {
+          "learner": "dp",
+          "alpha": 5
+        },
+        "mode": "closed",
+        "particles": 128,
+        "algorithm_seed": 0,
+        "status": "ok",
+        "gospa": 7.7573985805426595,
+        "log_loss": 12.827621821720781,
+        "birth_losses": [
+          12.188794571436926,
+          12.49472727190334,
+          9.653638677352436,
+          12.79501655603665,
+          12.918688729691945,
+          13.052220656788444,
+          13.056356376237312,
+          13.125260299821878,
+          13.188011245385816,
+          13.248334384643307,
+          13.192542255608563,
+          13.21025123406278,
+          13.205138252672967,
+          13.281226124816847,
+          13.288671049879943,
+          13.343071461193347
+        ],
+        "missed": 1.046875,
+        "false": 0.1328125,
+        "confirmation_delay": 5.222222222222222,
+        "unconfirmed_targets": 7,
+        "fragmentation": 0.0625,
+        "birth_time_error": 3.3844915191364624,
+        "model_size": 10.05857066444652,
+        "histories": [
+          {
+            "label": 1,
+            "first": 0,
+            "end": 4,
+            "target": 0,
+            "purity": 1.0,
+            "birth_estimate": 0.0,
+            "true_birth": 0
+          },
+          {
+            "label": 10,
+            "first": 2,
+            "end": 6,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 1.8984375000000004,
+            "true_birth": null
+          },
+          {
+            "label": 29,
+            "first": 8,
+            "end": 12,
+            "target": 1,
+            "purity": 1.0,
+            "birth_estimate": 7.890625000000439,
+            "true_birth": 8
+          },
+          {
+            "label": 47,
+            "first": 16,
+            "end": 20,
+            "target": 2,
+            "purity": 1.0,
+            "birth_estimate": 15.894668906336403,
+            "true_birth": 16
+          },
+          {
+            "label": 51,
+            "first": 17,
+            "end": 21,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 16.885207471633514,
+            "true_birth": null
+          },
+          {
+            "label": 63,
+            "first": 25,
+            "end": 29,
+            "target": 3,
+            "purity": 1.0,
+            "birth_estimate": 24.9698382156986,
+            "true_birth": 24
+          },
+          {
+            "label": 80,
+            "first": 32,
+            "end": 36,
+            "target": 4,
+            "purity": 1.0,
+            "birth_estimate": 31.878464122695558,
+            "true_birth": 32
+          },
+          {
+            "label": 108,
+            "first": 45,
+            "end": 49,
+            "target": 5,
+            "purity": 1.0,
+            "birth_estimate": 44.939676431395746,
+            "true_birth": 40
+          },
+          {
+            "label": 121,
+            "first": 57,
+            "end": 61,
+            "target": 6,
+            "purity": 1.0,
+            "birth_estimate": 56.943283257257065,
+            "true_birth": 48
+          },
+          {
+            "label": 136,
+            "first": 70,
+            "end": 74,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 69.90501908113242,
+            "true_birth": null
+          },
+          {
+            "label": 167,
+            "first": 108,
+            "end": 112,
+            "target": 12,
+            "purity": 0.6666666666666666,
+            "birth_estimate": 107.88689227777269,
+            "true_birth": 96
+          }
+        ],
+        "admitted": 11,
+        "initiations": 184,
+        "predictive_terms": 1415,
+        "runtime": 2.8267879220002214,
+        "total_runtime": 2.8425997250014916,
+        "sensor": {
+          "detection": 0.9,
+          "clutter": 6.0,
+          "survival": 0.98,
+          "birth_rate": 0.125
+        }
+      },
+      "baseline": {
+        "seed": 282,
+        "condition": "nonrecurring",
+        "config": {
+          "learner": "kde",
+          "bandwidth": 1.0,
+          "residual": 0.5
+        },
+        "mode": "closed",
+        "particles": 128,
+        "algorithm_seed": 0,
+        "status": "ok",
+        "gospa": 4.297480236454461,
+        "log_loss": 12.583952891434429,
+        "birth_losses": [
+          12.188794571436924,
+          12.851402215842068,
+          9.29085463187972,
+          12.79501655603663,
+          12.823378549887622,
+          12.869899099994468,
+          12.874034819443354,
+          12.862896035354387,
+          12.851536436984013,
+          12.911862148015391,
+          12.7870771475004,
+          12.804786125954616,
+          12.799673144564794,
+          12.875761016708491,
+          12.883205941768285,
+          12.873067821579681
+        ],
+        "missed": 0.1328125,
+        "false": 0.21875,
+        "confirmation_delay": 1.5,
+        "unconfirmed_targets": 0,
+        "fragmentation": 0.0625,
+        "birth_time_error": 0.2696085068528094,
+        "model_size": 20,
+        "histories": [
+          {
+            "label": 1,
+            "first": 0,
+            "end": 4,
+            "target": 0,
+            "purity": 1.0,
+            "birth_estimate": 0.0,
+            "true_birth": 0
+          },
+          {
+            "label": 10,
+            "first": 2,
+            "end": 6,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 1.8903553109381201,
+            "true_birth": null
+          },
+          {
+            "label": 28,
+            "first": 8,
+            "end": 12,
+            "target": 1,
+            "purity": 1.0,
+            "birth_estimate": 7.893486190978679,
+            "true_birth": 8
+          },
+          {
+            "label": 40,
+            "first": 16,
+            "end": 20,
+            "target": 2,
+            "purity": 1.0,
+            "birth_estimate": 15.89612081904412,
+            "true_birth": 16
+          },
+          {
+            "label": 43,
+            "first": 17,
+            "end": 21,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 16.889378555590522,
+            "true_birth": null
+          },
+          {
+            "label": 54,
+            "first": 25,
+            "end": 29,
+            "target": 3,
+            "purity": 1.0,
+            "birth_estimate": 24.894361372688323,
+            "true_birth": 24
+          },
+          {
+            "label": 71,
+            "first": 32,
+            "end": 36,
+            "target": 4,
+            "purity": 1.0,
+            "birth_estimate": 31.89527050119275,
+            "true_birth": 32
+          },
+          {
+            "label": 101,
+            "first": 40,
+            "end": 44,
+            "target": 5,
+            "purity": 1.0,
+            "birth_estimate": 39.895647952725064,
+            "true_birth": 40
+          },
+          {
+            "label": 115,
+            "first": 47,
+            "end": 51,
+            "target": 6,
+            "purity": 0.75,
+            "birth_estimate": 46.894711587580055,
+            "true_birth": 48
+          },
+          {
+            "label": 126,
+            "first": 56,
+            "end": 60,
+            "target": 7,
+            "purity": 1.0,
+            "birth_estimate": 55.895407085116766,
+            "true_birth": 56
+          },
+          {
+            "label": 147,
+            "first": 64,
+            "end": 68,
+            "target": 8,
+            "purity": 1.0,
+            "birth_estimate": 63.89498246928128,
+            "true_birth": 64
+          },
+          {
+            "label": 160,
+            "first": 70,
+            "end": 74,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 69.89333230289652,
+            "true_birth": null
+          },
+          {
+            "label": 162,
+            "first": 72,
+            "end": 76,
+            "target": 9,
+            "purity": 1.0,
+            "birth_estimate": 71.8968089536334,
+            "true_birth": 72
+          },
+          {
+            "label": 177,
+            "first": 80,
+            "end": 84,
+            "target": 10,
+            "purity": 1.0,
+            "birth_estimate": 79.89463687080297,
+            "true_birth": 80
+          },
+          {
+            "label": 194,
+            "first": 88,
+            "end": 92,
+            "target": 11,
+            "purity": 1.0,
+            "birth_estimate": 87.89583194005316,
+            "true_birth": 88
+          },
+          {
+            "label": 237,
+            "first": 105,
+            "end": 109,
+            "target": 13,
+            "purity": 1.0,
+            "birth_estimate": 104.8942350378068,
+            "true_birth": 104
+          },
+          {
+            "label": 252,
+            "first": 111,
+            "end": 115,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 110.89508700316554,
+            "true_birth": null
+          },
+          {
+            "label": 255,
+            "first": 112,
+            "end": 116,
+            "target": 14,
+            "purity": 1.0,
+            "birth_estimate": 111.89555046868333,
+            "true_birth": 112
+          },
+          {
+            "label": 273,
+            "first": 120,
+            "end": 124,
+            "target": 15,
+            "purity": 1.0,
+            "birth_estimate": 119.89601396861141,
+            "true_birth": 120
+          },
+          {
+            "label": 276,
+            "first": 120,
+            "end": 124,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 119.8807099208907,
+            "true_birth": null
+          }
+        ],
+        "admitted": 20,
+        "initiations": 292,
+        "predictive_terms": 1206,
+        "runtime": 0.5214222400027211,
+        "total_runtime": 0.5366568949975772,
+        "sensor": {
+          "detection": 0.9,
+          "clutter": 6.0,
+          "survival": 0.98,
+          "birth_rate": 0.125
+        }
+      }
+    },
+    {
+      "seed": 299,
+      "condition": "high_clutter",
+      "dp_gospa": 8.518072908615324,
+      "baseline_gospa": 7.72840955536013,
+      "dp": {
+        "seed": 299,
+        "condition": "high_clutter",
+        "config": {
+          "learner": "dp",
+          "alpha": 5
+        },
+        "mode": "closed",
+        "particles": 128,
+        "algorithm_seed": 0,
+        "status": "ok",
+        "gospa": 8.518072908615324,
+        "log_loss": 11.011005097582924,
+        "birth_losses": [
+          12.22394738441173,
+          4.028408960528037,
+          7.762833600766228,
+          12.615191497206904,
+          11.461796956870456,
+          12.533490291273818,
+          12.58046733936224,
+          12.579468550637184,
+          12.547006528752778,
+          12.609071113476329,
+          9.880425927163229,
+          12.559967177808716,
+          12.654250860108872,
+          12.690680647916016,
+          11.817863292258284,
+          5.631211432785964
+        ],
+        "missed": 1.2734375,
+        "false": 0.15625,
+        "confirmation_delay": 3.6666666666666665,
+        "unconfirmed_targets": 10,
+        "fragmentation": 0.125,
+        "birth_time_error": 2.358931433366381,
+        "model_size": 2.039535772753892,
+        "histories": [
+          {
+            "label": 1,
+            "first": 0,
+            "end": 4,
+            "target": 0,
+            "purity": 1.0,
+            "birth_estimate": 0.0,
+            "true_birth": 0
+          },
+          {
+            "label": 16,
+            "first": 7,
+            "end": 11,
+            "target": 1,
+            "purity": 0.6,
+            "birth_estimate": 6.984375000000002,
+            "true_birth": 8
+          },
+          {
+            "label": 30,
+            "first": 14,
+            "end": 18,
+            "target": 2,
+            "purity": 0.75,
+            "birth_estimate": 13.984301861438441,
+            "true_birth": 16
+          },
+          {
+            "label": 80,
+            "first": 90,
+            "end": 94,
+            "target": 10,
+            "purity": 1.0,
+            "birth_estimate": 89.42365942479525,
+            "true_birth": 80
+          },
+          {
+            "label": 86,
+            "first": 112,
+            "end": 116,
+            "target": 14,
+            "purity": 1.0,
+            "birth_estimate": 110.67722475419065,
+            "true_birth": 112
+          },
+          {
+            "label": 87,
+            "first": 120,
+            "end": 124,
+            "target": 15,
+            "purity": 1.0,
+            "birth_estimate": 119.62416920896787,
+            "true_birth": 120
+          }
+        ],
+        "admitted": 6,
+        "initiations": 90,
+        "predictive_terms": 389,
+        "runtime": 0.6620269680061028,
+        "total_runtime": 0.6753464569992502,
+        "sensor": {
+          "detection": 0.7,
+          "clutter": 12.0,
+          "survival": 0.98,
+          "birth_rate": 0.125
+        }
+      },
+      "baseline": {
+        "seed": 299,
+        "condition": "high_clutter",
+        "config": {
+          "learner": "kde",
+          "bandwidth": 1.0,
+          "residual": 0.5
+        },
+        "mode": "closed",
+        "particles": 128,
+        "algorithm_seed": 0,
+        "status": "ok",
+        "gospa": 7.72840955536013,
+        "log_loss": 9.286180719003744,
+        "birth_losses": [
+          12.22394738441173,
+          3.0987922058605006,
+          3.6553468803451588,
+          12.838335048521113,
+          3.9729311181252127,
+          12.756633842588029,
+          12.803610890676447,
+          12.802612101951395,
+          12.770150080066989,
+          12.832214664790536,
+          3.97626718150468,
+          12.783110729122924,
+          12.7596113757667,
+          12.796041163573843,
+          3.1035007909763577,
+          3.4057860457782723
+        ],
+        "missed": 1.1171875,
+        "false": 0.0703125,
+        "confirmation_delay": 1.8571428571428572,
+        "unconfirmed_targets": 9,
+        "fragmentation": 0.0,
+        "birth_time_error": 0.3296836703942076,
+        "model_size": 7,
+        "histories": [
+          {
+            "label": 1,
+            "first": 0,
+            "end": 4,
+            "target": 0,
+            "purity": 1.0,
+            "birth_estimate": 0.0,
+            "true_birth": 0
+          },
+          {
+            "label": 12,
+            "first": 8,
+            "end": 12,
+            "target": 1,
+            "purity": 0.8,
+            "birth_estimate": 7.601988770799952,
+            "true_birth": 8
+          },
+          {
+            "label": 17,
+            "first": 32,
+            "end": 36,
+            "target": 4,
+            "purity": 1.0,
+            "birth_estimate": 31.597319894976962,
+            "true_birth": 32
+          },
+          {
+            "label": 27,
+            "first": 80,
+            "end": 84,
+            "target": 10,
+            "purity": 1.0,
+            "birth_estimate": 79.60784082897707,
+            "true_birth": 80
+          },
+          {
+            "label": 31,
+            "first": 97,
+            "end": 101,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 96.588353352588,
+            "true_birth": null
+          },
+          {
+            "label": 33,
+            "first": 112,
+            "end": 116,
+            "target": 14,
+            "purity": 1.0,
+            "birth_estimate": 111.6106285026382,
+            "true_birth": 112
+          },
+          {
+            "label": 34,
+            "first": 120,
+            "end": 124,
+            "target": 15,
+            "purity": 1.0,
+            "birth_estimate": 119.60411998024256,
+            "true_birth": 120
+          }
+        ],
+        "admitted": 7,
+        "initiations": 36,
+        "predictive_terms": 457,
+        "runtime": 0.20794663499691524,
+        "total_runtime": 0.22157536400482059,
+        "sensor": {
+          "detection": 0.7,
+          "clutter": 12.0,
+          "survival": 0.98,
+          "birth_rate": 0.125
+        }
+      }
+    },
+    {
+      "seed": 235,
+      "condition": "drift",
+      "dp_gospa": 6.281388785226786,
+      "baseline_gospa": 4.549635726712683,
+      "dp": {
+        "seed": 235,
+        "condition": "drift",
+        "config": {
+          "learner": "dp",
+          "alpha": 5
+        },
+        "mode": "closed",
+        "particles": 128,
+        "algorithm_seed": 0,
+        "status": "ok",
+        "gospa": 6.281388785226786,
+        "log_loss": 8.53740479712381,
+        "birth_losses": [
+          12.158213718754709,
+          4.1968325335890455,
+          1.8130182751728494,
+          1.068090488903394,
+          12.835450809841962,
+          5.582512665225864,
+          4.325772763017937,
+          7.572837777178432,
+          10.675815383810868,
+          2.5975014638082925,
+          9.526716691663326,
+          13.230579298391978,
+          13.222741423982862,
+          13.272046415595543,
+          12.034356647273476,
+          12.485990397770417
+        ],
+        "missed": 0.6015625,
+        "false": 0.1640625,
+        "confirmation_delay": 2.3333333333333335,
+        "unconfirmed_targets": 4,
+        "fragmentation": 0.125,
+        "birth_time_error": 1.3111857829815234,
+        "model_size": 4.74999999999935,
+        "histories": [
+          {
+            "label": 6,
+            "first": 1,
+            "end": 5,
+            "target": 0,
+            "purity": 1.0,
+            "birth_estimate": 0.9296875000000002,
+            "true_birth": 0
+          },
+          {
+            "label": 34,
+            "first": 8,
+            "end": 12,
+            "target": 1,
+            "purity": 1.0,
+            "birth_estimate": 7.980788228808037,
+            "true_birth": 8
+          },
+          {
+            "label": 51,
+            "first": 12,
+            "end": 16,
+            "target": -1,
+            "purity": 1.0,
+            "birth_estimate": 11.916462236201216,
+            "true_birth": null
+          },
+          {
+            "label": 63,
+            "first": 16,
+            "end": 20,
+            "target": 2,
+            "purity": 1.0,
+            "birth_estimate": 15.938204297877508,
+            "true_birth": 16
+          },
+          {
+            "label": 85,
+            "first": 26,
+            "end": 30,
+            "target": 3,
+            "purity": 1.0,
+            "birth_estimate": 25.262926216022937,
+            "true_birth": 24
+          },
+          {
+            "label": 101,
+            "first": 32,
+            "end": 36,
+            "target": 4,
+            "purity": 0.8,
+            "birth_estimate": 31.914362815309186,
+            "true_birth": 32
+          },
+          {
+            "label": 112,
+            "first": 40,
+            "end": 44,
+            "target": 5,
+            "purity": 1.0,
+            "birth_estimate": 39.97196121573948,
+            "true_birth": 40
+          },
+          {
+            "label": 126,
+            "first": 48,
+            "end": 52,
+            "target": 6,
+            "purity": 1.0,
+            "birth_estimate": 48.000000000000064,
+            "true_birth": 48
+          },
+          {
+            "label": 137,
+            "first": 56,
+            "end": 60,
+            "target": 7,
+            "purity": 1.0,
+            "birth_estimate": 56.0,
+            "true_birth": 56
+          },
+          {
+            "label": 142,
+            "first": 64,
+            "end": 68,
+            "target": 8,
+            "purity": 1.0,
+            "birth_estimate": 62.52851536570924,
+            "true_birth": 64
+          },
+          {
+            "label": 153,
+            "first": 74,
+            "end": 78,
+            "target": 9,
+            "purity": 1.0,
+            "birth_estimate": 72.97701010319825,
+            "true_birth": 72
+          },
+          {
+            "label": 157,
+            "first": 80,
+            "end": 84,
+            "target": 10,
+            "purity": 1.0,
+            "birth_estimate": 79.984375,
+            "true_birth": 80
+          },
+          {
+            "label": 164,
+            "first": 107,
+            "end": 111,
+            "target": 12,
+            "purity": 1.0,
+            "birth_estimate": 106.88281250000048,
+            "true_birth": 96
+          }
+        ],
+        "admitted": 13,
+        "initiations": 169,
+        "predictive_terms": 736,
+        "runtime": 2.143240422003146,
+        "total_runtime": 2.1589342770021176,
+        "sensor": {
+          "detection": 0.9,
+          "clutter": 6.0,
+          "survival": 0.98,
+          "birth_rate": 0.125
+        }
+      },
+      "baseline": {
+        "seed": 235,
+        "condition": "drift",
+        "config": {
+          "learner": "kde",
+          "bandwidth": 1.0,
+          "residual": 0.5
+        },
+        "mode": "closed",
+        "particles": 128,
+        "algorithm_seed": 0,
+        "status": "ok",
+        "gospa": 4.549635726712683,
+        "log_loss": 5.822524935615707,
+        "birth_losses": [
+          12.158213718754709,
+          3.4582306935751808,
+          2.49334307064257,
+          2.0689922325560106,
+          12.83545080984196,
+          5.904100106169638,
+          4.116539687965437,
+          5.31076284156204,
+          5.969627021063097,
+          4.57060529804777,
+          6.127300379569938,
+          6.101819459666033,
+          5.944449050740474,
+          6.057523043980442,
+          5.226385954371393,
+          4.817055601344622
+        ],
+        "missed": 0.2109375,
+        "false": 0.1796875,
+        "confirmation_delay": 1.4375,
+        "unconfirmed_targets": 0,
+        "fragmentation": 0.25,
+        "birth_time_error": 0.9139844033866721,
+        "model_size": 17,
+        "histories": [
+          {
+            "label": 6,
+            "first": 1,
+            "end": 5,
+            "target": 0,
+            "purity": 1.0,
+            "birth_estimate": 0.9147903773988082,
+            "true_birth": 0
+          },
+          {
+            "label": 29,
+            "first": 8,
+            "end": 12,
+            "target": 1,
+            "purity": 1.0,
+            "birth_estimate": 7.895873231852092,
+            "true_birth": 8
+          },
+          {
+            "label": 44,
+            "first": 16,
+            "end": 20,
+            "target": 2,
+            "purity": 1.0,
+            "birth_estimate": 15.895829285637692,
+            "true_birth": 16
+          },
+          {
+            "label": 64,
+            "first": 26,
+            "end": 30,
+            "target": 3,
+            "purity": 1.0,
+            "birth_estimate": 25.894933796913563,
+            "true_birth": 24
+          },
+          {
+            "label": 78,
+            "first": 32,
+            "end": 36,
+            "target": 4,
+            "purity": 0.8,
+            "birth_estimate": 31.893207270831905,
+            "true_birth": 32
+          },
+          {
+            "label": 91,
+            "first": 40,
+            "end": 44,
+            "target": 5,
+            "purity": 1.0,
+            "birth_estimate": 39.8949784215789,
+            "true_birth": 40
+          },
+          {
+            "label": 111,
+            "first": 48,
+            "end": 52,
+            "target": 6,
+            "purity": 1.0,
+            "birth_estimate": 47.894341215978535,
+            "true_birth": 48
+          },
+          {
+            "label": 124,
+            "first": 56,
+            "end": 60,
+            "target": 7,
+            "purity": 1.0,
+            "birth_estimate": 55.897244692261204,
+            "true_birth": 56
+          },
+          {
+            "label": 134,
+            "first": 64,
+            "end": 68,
+            "target": 8,
+            "purity": 1.0,
+            "birth_estimate": 63.89602375953404,
+            "true_birth": 64
+          },
+          {
+            "label": 156,
+            "first": 74,
+            "end": 78,
+            "target": 9,
+            "purity": 1.0,
+            "birth_estimate": 73.89549733056846,
+            "true_birth": 72
+          },
+          {
+            "label": 166,
+            "first": 80,
+            "end": 84,
+            "target": 10,
+            "purity": 1.0,
+            "birth_estimate": 79.897563429579,
+            "true_birth": 80
+          },
+          {
+            "label": 184,
+            "first": 87,
+            "end": 91,
+            "target": 11,
+            "purity": 0.8,
+            "birth_estimate": 86.89490058631297,
+            "true_birth": 88
+          },
+          {
+            "label": 199,
+            "first": 96,
+            "end": 100,
+            "target": 12,
+            "purity": 1.0,
+            "birth_estimate": 95.89557237787588,
+            "true_birth": 96
+          },
+          {
+            "label": 215,
+            "first": 103,
+            "end": 107,
+            "target": 12,
+            "purity": 1.0,
+            "birth_estimate": 102.89473085139133,
+            "true_birth": 96
+          },
+          {
+            "label": 218,
+            "first": 104,
+            "end": 108,
+            "target": 13,
+            "purity": 1.0,
+            "birth_estimate": 103.89615430291639,
+            "true_birth": 104
+          },
+          {
+            "label": 239,
+            "first": 113,
+            "end": 117,
+            "target": 14,
+            "purity": 1.0,
+            "birth_estimate": 112.8948494510894,
+            "true_birth": 112
+          },
+          {
+            "label": 262,
+            "first": 121,
+            "end": 125,
+            "target": 15,
+            "purity": 1.0,
+            "birth_estimate": 120.89462162457046,
+            "true_birth": 120
+          }
+        ],
+        "admitted": 17,
+        "initiations": 280,
+        "predictive_terms": 1087,
+        "runtime": 0.5030720559952897,
+        "total_runtime": 0.5176765090000117,
+        "sensor": {
+          "detection": 0.9,
+          "clutter": 6.0,
+          "survival": 0.98,
+          "birth_rate": 0.125
+        }
+      }
+    }
+  ],
+  "sensitivity": {
+    "rows": 1080,
+    "failures": 0,
+    "summary": [
+      {
+        "learner": "dp",
+        "mode": "replay",
+        "particles": 64,
+        "mean": 6.198461918003108,
+        "mean_within_case_sd": 0.026975013823337213
+      },
+      {
+        "learner": "dp",
+        "mode": "replay",
+        "particles": 128,
+        "mean": 6.19643817416759,
+        "mean_within_case_sd": 0.016371840845928652
+      },
+      {
+        "learner": "dp",
+        "mode": "replay",
+        "particles": 256,
+        "mean": 6.189007454096758,
+        "mean_within_case_sd": 0.01682590751561112
+      },
+      {
+        "learner": "dp",
+        "mode": "closed",
+        "particles": 64,
+        "mean": 4.9286516729653735,
+        "mean_within_case_sd": 0.008763512840549555
+      },
+      {
+        "learner": "dp",
+        "mode": "closed",
+        "particles": 128,
+        "mean": 4.925436953602381,
+        "mean_within_case_sd": 0.008092673883913241
+      },
+      {
+        "learner": "dp",
+        "mode": "closed",
+        "particles": 256,
+        "mean": 4.927291259092283,
+        "mean_within_case_sd": 0.008394949531037811
+      },
+      {
+        "learner": "finite",
+        "mode": "replay",
+        "particles": 64,
+        "mean": 6.207464241794336,
+        "mean_within_case_sd": 0.0274385604869084
+      },
+      {
+        "learner": "finite",
+        "mode": "replay",
+        "particles": 128,
+        "mean": 6.211209695855886,
+        "mean_within_case_sd": 0.016873091577411882
+      },
+      {
+        "learner": "finite",
+        "mode": "replay",
+        "particles": 256,
+        "mean": 6.2001947133969235,
+        "mean_within_case_sd": 0.018141848327691834
+      },
+      {
+        "learner": "finite",
+        "mode": "closed",
+        "particles": 64,
+        "mean": 6.748589895805448,
+        "mean_within_case_sd": 0.009653096750335889
+      },
+      {
+        "learner": "finite",
+        "mode": "closed",
+        "particles": 128,
+        "mean": 6.751632722815487,
+        "mean_within_case_sd": 0.003713584046604813
+      },
+      {
+        "learner": "finite",
+        "mode": "closed",
+        "particles": 256,
+        "mean": 6.745765755854043,
+        "mean_within_case_sd": 0.008150941879782917
+      }
+    ]
+  }
+}

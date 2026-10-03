@@ -1,0 +1,53 @@
+{
+  "stage": "heldout",
+  "source_hash": "87afb2327dc416c41fccc2b93d3f88450238c5626c9ce5ea2aa99d18aa89d726",
+  "seed_range": [
+    200,
+    300
+  ],
+  "configurations": [
+    {
+      "learner": "dp",
+      "alpha": 5
+    },
+    {
+      "learner": "finite",
+      "alpha": 1,
+      "components": 16
+    },
+    {
+      "learner": "kde",
+      "bandwidth": 1.0,
+      "residual": 0.5
+    },
+    {
+      "learner": "dp",
+      "alpha": 5,
+      "ablation": "prior_feedback"
+    },
+    {
+      "learner": "dp",
+      "alpha": 5,
+      "ablation": "confirmation_time"
+    }
+  ],
+  "conditions": [
+    "stationary2",
+    "stationary4",
+    "stationary8",
+    "nonrecurring",
+    "high_clutter",
+    "drift"
+  ],
+  "modes": [
+    "replay",
+    "closed"
+  ],
+  "host": "workstation1",
+  "python": "3.10.12",
+  "numpy": "2.2.6",
+  "workers": 48,
+  "pid": 179774,
+  "start_unix": 1791055229.9822907,
+  "pending": 6000
+}
