@@ -122,7 +122,7 @@ class ReferenceKDE:
 class BirthAdapter:
     """Identical intensity, admission, and mixture moment initialization."""
     birth_probability = .35
-    odds_threshold = .02
+    odds_threshold = .01
 
     def __init__(self, config, sensor, seed=0, particles=128):
         self.config, self.sensor = config, sensor

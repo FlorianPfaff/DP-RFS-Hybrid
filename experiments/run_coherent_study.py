@@ -1,18 +1,18 @@
 """Restartable study stages, with explicit freeze required for held-out seeds."""
 import argparse
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from dataclasses import asdict
 import hashlib
 import json
 import os
 from pathlib import Path
 import platform
-import subprocess
 import time
 import traceback
 
 import numpy as np
 
-from dp_rfs_hybrid.coherent_study import CONDITIONS, configuration_id, configurations, run_trial
+from dp_rfs_hybrid.coherent_study import CONDITIONS, configuration_id, configurations, replay_stream, run_trial
 
 
 def source_hash():
@@ -28,6 +28,20 @@ def source_hash():
 def job(arguments):
     seed, condition, config, mode, particles, algorithm_seed, destination = arguments
     try:
+        if mode == "replay":
+            history_path = Path(destination).parent.parent/"histories"/f"{seed:03d}_{condition}.json"
+            if not history_path.exists():
+                data, stream = replay_stream(seed, condition)
+                history_path.parent.mkdir(parents=True, exist_ok=True)
+                payload = {"seed": seed, "condition": condition, "sensor": asdict(data["sensor"]),
+                           "measurements": [z.tolist() for z in data["measurements"]],
+                           "measurement_sources": [z.tolist() for z in data["sources"]],
+                           "birth_states": [data["truth"][i, t].tolist() for i, t in enumerate(data["births"])],
+                           "histories": [{"evidence": asdict(h), "initial_mean": prior[0].tolist(),
+                                          "initial_covariance": prior[1].tolist()} for h, prior in stream]}
+                temporary = history_path.with_suffix(f".{os.getpid()}.tmp")
+                temporary.write_text(json.dumps(payload, allow_nan=False)+"\n")
+                temporary.replace(history_path)
         result = run_trial(seed, condition, config, mode, particles, algorithm_seed)
     except Exception:
         result = {"seed": seed, "condition": condition, "config": config, "mode": mode,
@@ -109,7 +123,7 @@ def main():
         for done, future in enumerate(as_completed(futures), 1):
             status, path = future.result()
             failures += status != "ok"
-            if status != "ok" or done % 25 == 0 or done == len(tasks):
+            if status != "ok" or done % 250 == 0 or done == len(tasks):
                 print(f"{stage}: {done}/{len(tasks)} completed, {failures} failures; {path}", flush=True)
     rows = load_rows(root/stage)
     if stage == "replay":
@@ -120,8 +134,9 @@ def main():
         if len(rows) != 1800:
             raise RuntimeError("Incomplete closed-loop campaign")
         selected = {name: values[0] for name, values in select(rows, "gospa").items()}
-        scores = {name: np.mean([r["gospa"] for r in rows if r["config"] == config and r["status"] == "ok"])
-                  for name, config in selected.items()}
+        if any(r["status"] != "ok" for r in rows):
+            raise RuntimeError("Development failures retained; investigate before freezing")
+        scores = {name: np.mean([r["gospa"] for r in rows if r["config"] == config]) for name, config in selected.items()}
         comparator = min(("finite", "kde"), key=lambda name: scores[name])
         proposal = {"selected": selected, "comparator": comparator, "development_gospa": scores,
                     "source_hash": source_hash(), "created_unix": time.time(),

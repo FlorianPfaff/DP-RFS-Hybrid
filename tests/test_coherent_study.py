@@ -27,6 +27,7 @@ def test_sensor_reproducibility_and_reserved_seeds():
     assert tracker.detection_probability == .7
     assert tracker.birth_model.clutter_intensity == 12/7000
     assert tracker.survival_probability == a["sensor"].survival
+    assert tracker.birth_model.process(np.array([-24., -10.])).accepted
     with pytest.raises(ValueError, match="reserved"):
         scenario(300, "stationary2")
 

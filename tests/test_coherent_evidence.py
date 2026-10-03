@@ -125,7 +125,8 @@ def test_smc_exact_reference_and_normalization(components):
     np.testing.assert_allclose(predictive.weights.sum(), 1.)
     assert np.linalg.eigvalsh(predictive.covariances).min() > 0
     grid = np.linspace(-30, 30, 2001)[:, None]
-    integral = np.trapz(np.exp(predictive.logpdf(grid)), grid[:, 0])
+    integrate = np.trapezoid if hasattr(np, "trapezoid") else np.trapz
+    integral = integrate(np.exp(predictive.logpdf(grid)), grid[:, 0])
     np.testing.assert_allclose(integral, 1., atol=1e-7)
     with pytest.raises(ValueError, match="Duplicate"):
         learner.update(sites[0])
@@ -154,3 +155,12 @@ def test_deterministic_replay():
         b.update(site)
     np.testing.assert_array_equal(a.allocations, b.allocations)
     np.testing.assert_array_equal(a.times, b.times)
+
+
+def test_low_information_limit():
+    args = (np.zeros(1), np.eye(1)*4, np.eye(1)*.3)
+    weak = BirthLikelihood(99, (0,), [[[1e-10]]], [[1e-9]], [0.])
+    exact = exact_posterior(small_sites()[:2] + [weak], *args)
+    without = exact_posterior(small_sites()[:2], *args)
+    np.testing.assert_allclose(exact["predictive"].logpdf([[0.], [2.]]),
+                               without["predictive"].logpdf([[0.], [2.]]), atol=1e-8)
